@@ -1,10 +1,12 @@
-﻿namespace PokemonAdventure
+﻿using PokemonAdventure.UserInteraction;
+
+namespace PokemonAdventure;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(@"
+        Console.WriteLine(@"
 
     ██████╗░░█████╗░██╗░░██╗███████╗██╗░░░██╗░█████╗░███╗░░██╗
     ██╔══██╗██╔══██╗██║░██╔╝██╔════╝███░░███║██╔══██╗████╗░██║
@@ -17,19 +19,18 @@
 
 ");
 
-            Printer printer = new Printer();
-            printer.Print("\t    Press Enter to start your Adventure.");
+        ConsolePrinter printer = new ConsolePrinter();
+        printer.Print("\t    Press Enter to start your Adventure.");
 
-            string input = "";
-            do
-            {
-                input = Console.ReadLine();
-            } while (input != "");
+        string input = "";
+        do
+        {
+            input = Console.ReadLine();
+        } while (input != "");
 
-            Story story = new Story();
-            story.Begin();
+        Story story = new Story();
+        story.Begin();
 
-            Console.ReadKey();
-        }
+        Console.ReadKey();
     }
 }

@@ -1,37 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PokemonAdventure.UserInteraction;
 
-namespace PokemonAdventure
+namespace PokemonAdventure;
+
+internal class Trainer
 {
-    internal class Trainer
+    public string Name { get; private set; }
+    public List<Pokemon> capturedPokemon { get; private set; }
+    ConsolePrinter printer = new ConsolePrinter();
+    Validator validator = new Validator();
+
+    public Trainer(Pokemon pokemon)
     {
-        public string Name { get; private set; }
-        public List<Pokemon> capturedPokemon { get; private set; }
-        Printer printer = new Printer();
-        Validator validator = new Validator();
-
-        public Trainer()
+        this.capturedPokemon = new List<Pokemon>
         {
-            capturedPokemon = new List<Pokemon>
-            {
-                new Pokemon("Pikachu")
-            };
-        }
+            pokemon
+        };
+    }
 
-        public void SetName()
+    public void SetName()
+    {
+        do
         {
-            do
-            {
-                printer.Print("What is your name? ");
-                Name = Console.ReadLine();
-            } while (!validator.isNameCorrect(Name));
-        }
-
-        
+            printer.Print("What is your name? ");
+            Name = Console.ReadLine();
+        } while (!validator.ConfirmName(Name));
     }
 }
