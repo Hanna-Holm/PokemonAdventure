@@ -17,5 +17,6 @@ internal class DecreaseDefenceMove : Move
         base.GetUsedBy(attacker, target);
         target.Defence -= this.Amount;
         printer.Print($"{target.Name} lost {this.Amount} defence and now has {target.Defence} defence left!");
+        Thread.Sleep(pauseInMs);
     }
 }

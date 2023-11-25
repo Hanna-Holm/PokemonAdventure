@@ -67,7 +67,22 @@ internal class Pokemon : ILevelable, IHealable, IDamageable
 
     public void MakeMove(Move move, Pokemon target)
     {
-        // Subtypspolymorfism? Beroende på vilken typ av move det är anropas GetUsedBy på den typen
+        // 1. Concept: Subtype-polymorfism
+        // 2. How? The method GetUsedBy gets invoked on the run-time type of move.
+        //    A Move can be any type derived from the abstract Move class.
+        //    For example the concrete classes AttackMove or DecreaseDefenceMove
+        //    which both have their own implementation of the GetUsedBy method.
+        //    Which method is called is determined in run-time depending on the
+        //    run-time type, which is whatever type of Move that is sent in as 
+        //    an argument to this MakeMove method.
+        // 3. Why? This enables dynamic dispatch which means that the method that
+        //    gets invoked depends on what the run-time type of move is.
+        //    The GetUsedBy method is invoked on the run-time type.
+        //    This is an example of subtype-polymorphism where we can write general
+        //    code that can be used for all subtypes.
+        //    The method GetUsedBy is called on whatever type the move is at run-time,
+        //    which means that we do not need to write several if-statements to decide
+        //    what method should be invoked, we can replace conditional with polymorphism.
         move.GetUsedBy(this, target);
     }
 

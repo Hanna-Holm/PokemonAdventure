@@ -1,5 +1,6 @@
 ﻿using PokemonAdventure.Moves;
 using PokemonAdventure.UserInteraction;
+
 namespace PokemonAdventure;
 
 internal class Battle
@@ -21,6 +22,7 @@ internal class Battle
 
         CreateEnemy();
         Fight();
+        printer.Print("The winner is ...");
     }
 
     private void CreateEnemy()
@@ -33,6 +35,8 @@ internal class Battle
         this.rival = new Trainer(rivalPokemon);
 
         printer.Print("A rival trainer appears and wants to battle!");
+        printer.Print($"Rival sends out {rivalPokemon.Name} level {rivalPokemon.Level} and health {rivalPokemon.Health}");
+        Thread.Sleep(pauseInMs);
         Console.ReadKey();
     }
     
@@ -43,9 +47,32 @@ internal class Battle
         Thread.Sleep(pauseInMs);
         Console.ReadKey();
 
-        Move move = currentPokemon.ChooseMove();
-        currentPokemon.MakeMove(move, rivalPokemon);
+        while (!isOver)
+        {
+            Move move = currentPokemon.ChooseMove();
+            currentPokemon.MakeMove(move, rivalPokemon);
+            
+            if (isOver)
+            {
+                printer.Print("Battle is over.");
+                return;
+            }
+            
+            rivalPokemon.MakeMove(GenerateRivalMove(), currentPokemon);
+        }
     }
 
-    
+    private Move GenerateRivalMove()
+    {
+        List<Move> availableMoves = new List<Move>();
+
+        foreach (Move move in rivalPokemon.Moves) 
+        {
+            availableMoves.Add(move);
+        }
+
+        Random random = new Random();
+        int index = random.Next(0, availableMoves.Count());
+        return availableMoves[index];
+    }
 }

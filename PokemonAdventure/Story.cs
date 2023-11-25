@@ -41,13 +41,15 @@ internal class Story
         printer.Print("You, as a Pokemon trainer, are able to battle other trainers with your Pokemon!");
         Console.ReadKey();
         Console.Clear();
+        printer.Print($"You have received a starting Pokemon called {startingPokemon.Name}");
+        printer.Print($"Its level is {startingPokemon.Level} and health is {startingPokemon.Health}");
+        Console.ReadKey();
+        Console.Clear();
         printer.Print("Winning battles will make your Pokemon grow stronger.");
         printer.Print("To become a Pokemon master, your Pokemon must become strong enough");
         printer.Print("to win against the gym leader.");
         Console.ReadKey();
         Console.Clear();
-        printer.Print("You have just got your own Pokemon!");
-        printer.Print($"It's name is {player.capturedPokemon[0].Name}!");
         printer.Print("You now enter the fantastic world of Pokemon...");
         printer.Print("Get ready to begin your adventure!");
         Console.ReadKey();

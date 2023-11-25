@@ -6,7 +6,6 @@ internal class AttackMove : Move
 {
     public override string Name { get; init; }
     private int damage;
-    private ConsolePrinter printer = new ConsolePrinter();
 
     public AttackMove(string name, int damage)
     {
@@ -19,5 +18,6 @@ internal class AttackMove : Move
         base.GetUsedBy(attacker, target);
         target.TakeDamage(damage);
         printer.Print($"{attacker.Name} made {damage} damage to {target.Name}, who now has {target.Health} health left.");
+        Thread.Sleep(pauseInMs);
     }
 }
