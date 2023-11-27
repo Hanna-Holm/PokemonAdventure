@@ -1,6 +1,8 @@
 ﻿using PokemonAdventure.Moves;
 using PokemonAdventure.UserInteraction;
 using PokemonAdventure.PokemonSpecifier;
+using System.Reflection.Emit;
+using System.Xml.Linq;
 
 namespace PokemonAdventure
 {
@@ -10,7 +12,7 @@ namespace PokemonAdventure
         private Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
         private bool isOver
-            => playerPokemon.Health <= 0 || rivalPokemon.Health <= 0;
+            => playerPokemon.CurrentHealth <= 0 || rivalPokemon.CurrentHealth <= 0;
 
         private ConsolePrinter printer = new ConsolePrinter();
         private int pauseInMs = 1000;
@@ -26,7 +28,7 @@ namespace PokemonAdventure
             this.rivalPokemon = rival.capturedPokemon[0];
 
             printer.Print("A rival trainer appears and wants to battle!");
-            printer.Print($"Rival sends out {rivalPokemon.Name} level {rivalPokemon.Level} and health {rivalPokemon.Health}");
+            printer.Print($"Rival sends out {rivalPokemon.Name} level {rivalPokemon.Level} and health {rivalPokemon.CurrentHealth}");
             Thread.Sleep(pauseInMs);
             Console.ReadKey();
 
@@ -68,13 +70,16 @@ namespace PokemonAdventure
 
                 if (isOver)
                 {
-                    printer.Print($"{rivalPokemon.Name} fainted!");
+                    printer.Print($"Rival {rivalPokemon.Name} fainted!");
                     Console.ReadKey();
                     return;
                 }
 
                 rivalPokemon.MakeMove(GenerateRivalMove(), playerPokemon);
                 Console.Clear();
+
+                printer.Print("Your stats: ");
+                playerPokemon.PrintStats(playerPokemon);
             }
         }
 
@@ -87,7 +92,7 @@ namespace PokemonAdventure
 
         private Pokemon CheckWhoWon()
         {
-            return playerPokemon.Health <= 0 ? rivalPokemon : playerPokemon;
+            return playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon;
         }
     }
 }
