@@ -1,6 +1,7 @@
-﻿namespace PokemonAdventure.UserInteraction;
-
-internal interface IPrinter
+﻿namespace PokemonAdventure.UserInteraction
 {
-    public void Print(string text);
+    internal interface IPrinter
+    {
+        public void Print(string text);
+    }
 }

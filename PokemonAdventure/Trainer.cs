@@ -1,28 +1,27 @@
 ﻿using PokemonAdventure.UserInteraction;
+using PokemonAdventure.PokemonSpecifier;
 
-namespace PokemonAdventure;
-
-internal class Trainer
+namespace PokemonAdventure
 {
-    public string Name { get; private set; }
-    public List<Pokemon> capturedPokemon { get; private set; }
-    ConsolePrinter printer = new ConsolePrinter();
-    Validator validator = new Validator();
-
-    public Trainer(Pokemon pokemon)
+    internal class Trainer
     {
-        this.capturedPokemon = new List<Pokemon>
-        {
-            pokemon
-        };
-    }
+        public string Name { get; private set; }
+        public List<Pokemon> capturedPokemon { get; private set; } = new List<Pokemon>();
+        ConsolePrinter printer = new ConsolePrinter();
+        Validator validator = new Validator();
 
-    public void SetName()
-    {
-        do
+        public Trainer(Pokemon pokemon)
         {
-            printer.Print("What is your name? ");
-            Name = Console.ReadLine();
-        } while (!validator.ConfirmName(Name));
+            this.capturedPokemon.Add(pokemon);
+        }
+
+        public void SetName()
+        {
+            do
+            {
+                printer.Print("What is your name? ");
+                Name = Console.ReadLine();
+            } while (!validator.ConfirmName(Name));
+        }
     }
 }

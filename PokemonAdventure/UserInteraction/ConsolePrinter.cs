@@ -1,25 +1,26 @@
 ﻿
-namespace PokemonAdventure.UserInteraction;
-
-internal class ConsolePrinter
+namespace PokemonAdventure.UserInteraction
 {
-    private int pauseTimeInMs = 18;
-
-    public void Print(string text)
+    internal class ConsolePrinter
     {
-        Console.WriteLine();
+        private int pauseTimeInMs = 14;
 
-        foreach (char c in text)
+        public void Print(string text)
         {
-            Console.Write(c);
-            Thread.Sleep(pauseTimeInMs);
+            Console.WriteLine();
 
-            if (Console.KeyAvailable)
+            foreach (char c in text)
             {
-                if (Console.ReadKey().Key == ConsoleKey.Enter)
+                Console.Write(c);
+                Thread.Sleep(pauseTimeInMs);
+
+                if (Console.KeyAvailable)
                 {
-                    Console.Write(text);
-                    return;
+                    if (Console.ReadKey().Key == ConsoleKey.Enter)
+                    {
+                        Console.Write(text);
+                        return;
+                    }
                 }
             }
         }
