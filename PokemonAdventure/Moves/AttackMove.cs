@@ -1,23 +1,26 @@
 ﻿using PokemonAdventure.UserInteraction;
+using PokemonAdventure.PokemonSpecifier;
 
-namespace PokemonAdventure.Moves;
-
-internal class AttackMove : Move
+namespace PokemonAdventure.Moves
 {
-    public override string Name { get; init; }
-    private int damage;
-
-    public AttackMove(string name, int damage)
+    internal class AttackMove : Move
     {
-        Name = name;
-        this.damage = damage;
-    }
+        public override string Name { get; init; }
+        private int damage { get; set; }
 
-    public override void GetUsedBy(Pokemon attacker, Pokemon target)
-    {
-        base.GetUsedBy(attacker, target);
-        target.TakeDamage(damage);
-        printer.Print($"{attacker.Name} made {damage} damage to {target.Name}, who now has {target.Health} health left.");
-        Thread.Sleep(pauseInMs);
+        public AttackMove(string name, int damage)
+        {
+            Name = name;
+            this.damage = damage;
+        }
+
+        public override void GetUsedBy(Pokemon attacker, Pokemon target)
+        {
+            base.GetUsedBy(attacker, target);
+            int totalDamage = (this.damage + attacker.Power - target.Defence) / 5;
+            target.TakeDamage(totalDamage);
+            printer.Print($"{attacker.Name} made {totalDamage} damage to {target.Name}, who now has {target.Health} health left.");
+            Thread.Sleep(pauseInMs);
+        }
     }
 }

@@ -1,14 +1,13 @@
-﻿using PokemonAdventure.UserInteraction;
-using PokemonAdventure.PokemonSpecifier;
+﻿using PokemonAdventure.PokemonSpecifier;
 
 namespace PokemonAdventure.Moves
 {
-    internal class DecreaseDefenceMove : Move
+    internal class DecreaseAttackMove : Move
     {
         public override string Name { get; init; }
         public int Amount { get; init; }
 
-        public DecreaseDefenceMove(string name, int amount)
+        public DecreaseAttackMove(string name, int amount)
         {
             Name = name;
             Amount = amount;
@@ -17,16 +16,14 @@ namespace PokemonAdventure.Moves
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
         {
             base.GetUsedBy(attacker, target);
-
-            if (target.Defence == 0)
+            if (target.Power == 0)
             {
                 printer.Print("But it failed.");
                 Thread.Sleep(pauseInMs);
                 return;
             }
-
-            target.Defence -= this.Amount;
-            printer.Print($"{target.Name} lost {this.Amount} defence and now has {target.Defence} defence left!");
+            target.Power -= this.Amount;
+            printer.Print($"{target.Name}s attack decreased with {this.Amount} and is now {target.Power}!");
             Thread.Sleep(pauseInMs);
         }
     }
