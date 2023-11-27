@@ -6,6 +6,7 @@ namespace PokemonAdventure.Moves
     internal class DecreaseDefenceMove : Move
     {
         public override string Name { get; init; }
+        public override string Description { get; } = "Lowers target defence";
         public int Amount { get; init; }
 
         public DecreaseDefenceMove(string name, int amount)

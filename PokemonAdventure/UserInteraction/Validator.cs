@@ -6,10 +6,18 @@ namespace PokemonAdventure.UserInteraction
         ConsolePrinter printer = new ConsolePrinter();
         public bool ConfirmName(string name)
         {
-            printer.Print($"Press Enter to confirm your name {name}. Press Esc to change name.");
+            if (name == "")
+            {
+                printer.Print("Well now... You must have a name?");
+                return false;
+            }
+
+            printer.Print($"Is your name {name}?\n");
+            Console.WriteLine("1. Yes, continue.");
+            Console.WriteLine("2. No, change name.");
             ConsoleKeyInfo input = Console.ReadKey();
 
-            if (input.Key == ConsoleKey.Enter)
+            if (input.Key == ConsoleKey.D1 || input.Key == ConsoleKey.NumPad1)
             {
                 return true;
             }
@@ -18,14 +26,19 @@ namespace PokemonAdventure.UserInteraction
             return false;
         }
 
-        public bool CheckIfValidNumber(string input, int numberOfChoices)
+        public bool CheckIfValidNumber(ConsoleKeyInfo input, int numberOfChoices)
         {
-            bool isNumber = int.TryParse(input, out int number);
-
-            if (number > 0 && number < numberOfChoices + 1)
+            if (char.IsDigit(input.KeyChar))
             {
-                return true;
+                int.TryParse(input.KeyChar.ToString(), out int number);
+
+                if (number > 0 && number < numberOfChoices + 1)
+                {
+                    return true;
+                }
             }
+
+            Console.Clear();
             Console.WriteLine("Please enter a valid number.");
             return false;
         }

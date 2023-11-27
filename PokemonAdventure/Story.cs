@@ -11,7 +11,6 @@ namespace PokemonAdventure
         private AllPokemon world = new AllPokemon();
         private PokemonGenerator PokemonGenerator = new PokemonGenerator();
         public Trainer player;
-        private List<Pokemon> availablePokemon;
         private Pokemon startingPokemon;
 
         public void Begin()
@@ -28,6 +27,9 @@ namespace PokemonAdventure
 
             Trainer rival = GenerateRival();
             Battle battle = new Battle(player, rival);
+            battle.Fight();
+            battle.ExecuteEndofBattleConsequence();
+            
             Console.Clear();
             ShouldRunBossBattle();
         }
@@ -56,7 +58,7 @@ namespace PokemonAdventure
             Console.ReadKey();
             Console.Clear();
             printer.Print($"You have received a starting Pokemon called {startingPokemon.Name}");
-            printer.Print($"It's a {startingPokemon.Type.TypeName} type at level {startingPokemon.Level} and health {startingPokemon.CurrentHealth}");
+            printer.Print($"It's a {startingPokemon.Type.TypeName} type, level {startingPokemon.Level} and health {startingPokemon.CurrentHealth}");
             Console.ReadKey();
             Console.Clear();
             printer.Print("You now enter the fantastic world of Pokemon...");

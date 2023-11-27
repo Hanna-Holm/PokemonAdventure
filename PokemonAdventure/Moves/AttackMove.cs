@@ -7,6 +7,7 @@ namespace PokemonAdventure.Moves
     {
         public override string Name { get; init; }
         private int damage { get; set; }
+        public override string Description { get; } = "Physical damage";
 
         public AttackMove(string name, int damage)
         {

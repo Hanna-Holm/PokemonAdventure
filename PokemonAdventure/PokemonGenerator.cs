@@ -14,10 +14,10 @@ namespace PokemonAdventure
         // 1. Concept: Method overloading
         // 2. How? 
         // 3. Why? 
-        public Pokemon GeneratePokemon(AllPokemon world)
+        public Pokemon GeneratePokemon(AllPokemon all)
         {
-            Pokemon pokemon = new Pokemon("Placeholder");
-            return world.KnownPokemon[new Random().Next(0, world.KnownPokemon.Count - 1)];
+            Pokemon samplePokemon = all.KnownPokemon[new Random().Next(0, all.KnownPokemon.Count - 1)];
+            return samplePokemon.Clone();
         }
 
         public Pokemon GeneratePokemon(AllPokemon world, Pokemon playerPokemon)
