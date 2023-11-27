@@ -1,82 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PokemonAdventure.Moves;
+using PokemonAdventure.UserInteraction;
+using PokemonAdventure.PokemonSpecifier;
+using System.Reflection.Emit;
+using System.Xml.Linq;
 
 namespace PokemonAdventure
 {
-    class Battle
+    internal class Battle
     {
         private Trainer player { get; init; }
-        private Trainer rival { get; set; }
-        private Pokemon currentPokemon { get; set; }
+        private Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
         private bool isOver
-            => currentPokemon.CurrentHealth <= 0 || rivalPokemon.CurrentHealth <= 0;
+            => playerPokemon.CurrentHealth <= 0 || rivalPokemon.CurrentHealth <= 0;
 
         private ConsolePrinter printer = new ConsolePrinter();
         private int pauseInMs = 1000;
 
-        public Battle(Trainer player)
-        {
-            this.player = player;
-            this.currentPokemon = player.CapturedPokemon[0];
-
-            CreateEnemy();
-            Fight();
-            printer.Print("The winner is ...");
-        }
-
-        private void CreateEnemy()
+        public Battle(Trainer player, Trainer rival)
         {
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
 
-            this.rivalPokemon = new Pokemon("Meowth", new AttackMove("Tackle", 15));
-            this.rival = new Trainer(rivalPokemon);
+            this.player = player;
+            this.playerPokemon = player.capturedPokemon[0];
+            this.rivalPokemon = rival.capturedPokemon[0];
 
             printer.Print("A rival trainer appears and wants to battle!");
             printer.Print($"Rival sends out {rivalPokemon.Name} level {rivalPokemon.Level} and health {rivalPokemon.CurrentHealth}");
             Thread.Sleep(pauseInMs);
             Console.ReadKey();
+
+            Fight();
+            Console.Clear();
+
+            Pokemon winner = CheckWhoWon();
+            if (playerPokemon == winner)
+            {
+                printer.Print($"Congratulations {player.Name}! \nYour Pokemon {playerPokemon.Name} won against {rivalPokemon.Name}!");
+                Console.ReadKey();
+                Console.Clear();
+                playerPokemon.IncreaseExperiencePointsBasedOf(rivalPokemon);
+            }
+            else
+            {
+                printer.Print($"{playerPokemon.Name} fainted!");
+                printer.Print("You lost!");
+                Console.ReadKey();
+            }
+
+            playerPokemon.SetStatsBasedOfLevel();
+            playerPokemon.RestoreHealth();
         }
 
         private void Fight()
         {
-            printer.Print("You send out your Pokemon:");
-            printer.Print($"{currentPokemon.Name}, go!");
+            printer.Print($"{player.Name} sends out a Pokemon:");
+            printer.Print($"{playerPokemon.Name}, go!");
             Thread.Sleep(pauseInMs);
             Console.ReadKey();
+            Console.Clear();
 
             while (!isOver)
             {
-                Move move = currentPokemon.ChooseMove();
-                currentPokemon.MakeMove(move, rivalPokemon);
+                Move move = playerPokemon.ChooseMove();
+                playerPokemon.MakeMove(move, rivalPokemon);
+                Console.Clear();
 
                 if (isOver)
                 {
-                    printer.Print("Battle is over.");
+                    printer.Print($"Rival {rivalPokemon.Name} fainted!");
+                    Console.ReadKey();
                     return;
                 }
 
-                rivalPokemon.MakeMove(GenerateRivalMove(), currentPokemon);
+                rivalPokemon.MakeMove(GenerateRivalMove(), playerPokemon);
+                Console.Clear();
+
+                printer.Print("Your stats: ");
+                playerPokemon.PrintStats(playerPokemon);
             }
         }
 
         private Move GenerateRivalMove()
         {
-            List<Move> availableMoves = new List<Move>();
-
-            foreach (Move move in rivalPokemon.Moves)
-            {
-                availableMoves.Add(move);
-            }
-
             Random random = new Random();
-            int index = random.Next(0, availableMoves.Count());
-            return availableMoves[index];
+            int index = random.Next(0, rivalPokemon.Moves.Count());
+            return rivalPokemon.Moves[index];
+        }
+
+        private Pokemon CheckWhoWon()
+        {
+            return playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon;
         }
     }
 }
