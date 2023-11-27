@@ -14,9 +14,9 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Volt tackle", 120),
                 new AttackMove("Thunder wave", 110),
                 new DecreaseDefenceMove("Leer", 10),
-                new DecreaseAttackMove("Growl", 10),
-
+                new DecreaseAttackMove("Growl", 10)
             };
+
         public ElectricType()
         {
             TypeName = "Electric";

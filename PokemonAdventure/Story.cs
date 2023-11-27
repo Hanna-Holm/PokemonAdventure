@@ -8,7 +8,7 @@ namespace PokemonAdventure
     internal class Story
     {
         private ConsolePrinter printer = new ConsolePrinter();
-        private PokemonWorld world = new PokemonWorld();
+        private AllPokemon world = new AllPokemon();
         private PokemonGenerator PokemonGenerator = new PokemonGenerator();
         public Trainer player;
         private List<Pokemon> availablePokemon;
@@ -22,7 +22,7 @@ namespace PokemonAdventure
 
             printer.Print("Welcome to the world of Pokemon.");
 
-            startingPokemon = PokemonGenerator.GenerateStartingPokemon(world);
+            startingPokemon = PokemonGenerator.GeneratePokemon(world);
             InitializePlayer(startingPokemon);
             ExplainGame();
 
@@ -56,7 +56,7 @@ namespace PokemonAdventure
             Console.ReadKey();
             Console.Clear();
             printer.Print($"You have received a starting Pokemon called {startingPokemon.Name}");
-            printer.Print($"It's a {startingPokemon.Type.TypeName} type at level {startingPokemon.Level} and health {startingPokemon.Health}");
+            printer.Print($"It's a {startingPokemon.Type.TypeName} type at level {startingPokemon.Level} and health {startingPokemon.CurrentHealth}");
             Console.ReadKey();
             Console.Clear();
             printer.Print("You now enter the fantastic world of Pokemon...");
@@ -66,7 +66,8 @@ namespace PokemonAdventure
 
         private Trainer GenerateRival()
         {
-            Pokemon rivalPokemon = PokemonGenerator.GenerateRivalPokemon(world, startingPokemon);
+            Pokemon rivalPokemon = PokemonGenerator.GeneratePokemon(world, startingPokemon);
+            rivalPokemon.Name = "Rival " + rivalPokemon.Name;
             return new Trainer(rivalPokemon);
         }
 

@@ -11,14 +11,18 @@ namespace PokemonAdventure
     {
         private int levelOffset = 2;
 
-        public Pokemon GenerateStartingPokemon(PokemonWorld world)
+        // 1. Concept: Method overloading
+        // 2. How? 
+        // 3. Why? 
+        public Pokemon GeneratePokemon(AllPokemon world)
         {
-            return world.knownPokemon[new Random().Next(0, world.knownPokemon.Count - 1)];
+            Pokemon pokemon = new Pokemon("Placeholder");
+            return world.KnownPokemon[new Random().Next(0, world.KnownPokemon.Count - 1)];
         }
 
-        public Pokemon GenerateRivalPokemon(PokemonWorld world, Pokemon playerPokemon)
+        public Pokemon GeneratePokemon(AllPokemon world, Pokemon playerPokemon)
         {
-            Pokemon pokemon = GenerateStartingPokemon(world);
+            Pokemon pokemon = GeneratePokemon(world);
             int rivalLevel = GenerateLevel(playerPokemon.Level);
             pokemon.Level = rivalLevel;
             pokemon.SetStatsBasedOfLevel();

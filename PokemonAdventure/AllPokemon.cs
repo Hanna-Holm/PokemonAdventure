@@ -4,9 +4,9 @@ using PokemonAdventure.PokemonTypes;
 
 namespace PokemonAdventure
 {
-    internal class PokemonWorld
+    internal class AllPokemon
     {
-        public List<Pokemon> knownPokemon = new List<Pokemon>
+        public List<Pokemon> KnownPokemon = new List<Pokemon>
         {
             new Pokemon("Pikachu", new ElectricType()),
             new Pokemon("Jolteon", new ElectricType()),

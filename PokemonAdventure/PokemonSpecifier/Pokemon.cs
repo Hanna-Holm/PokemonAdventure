@@ -6,27 +6,38 @@ namespace PokemonAdventure.PokemonSpecifier
 {
     internal class Pokemon : ILevelable, IHealable, IDamageable, IPokemonType
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public IPokemonType Type { get; init; }
         public string TypeName { get; }
         public int ExperiencePoints { get; set; } = 0;
+        private int levelFactor = 10;
         public int Level { get; set; } = 5;
-        private int ExperiencePointsToLevelUp = 50;
+        public int LevelThreshold => Level * 10;
         public bool ShouldLevelUp
-            => ExperiencePoints >= ExperiencePointsToLevelUp;
-        private int health;
-        public int Health
+            => ExperiencePoints >= LevelThreshold;
+        private int currentHealth;
+        public int CurrentHealth
         {
-            get => health;
+            get => currentHealth;
             set
             {
                 if (value < 0)
-                    health = 0;
+                    currentHealth = 0;
                 else
-                    health = value;
+                    currentHealth = value;
             }
         }
         private int maxHealth { get; set; }
+
+        // 1. Concept: Encapsulation
+        // 2: How? We are hiding the backing field power by using the access modifier private.
+        //    Access to the private power field is only possible inside this class itself.
+        //    We ensure that the power is never set to an invalid state from outside this class
+        //    by having logic in the public Power property, and having the backing field private.
+        // 3. Why? The property Power is part of the public interface that we can interact with from outside this class,
+        //    and we ensure that the power cannot be set to an invalid state from outside this class.
+        //    We cannot set the private power from outside this class, only through the public property
+        //    that contains the logic.
         private int power;
         public int Power 
         {
@@ -72,15 +83,24 @@ namespace PokemonAdventure.PokemonSpecifier
         }
 
         // 1. Concept: Constructor overload
-        // 2. How?
-        // 3. Why?
+        // 2. How? We define two different constructors in this class, one the that takes the parameters
+        //    string name and IPokemonType, and one that takes the parameters string name, IPokemonType type and int Level
+        // 3. Why? This enables object construction is two different ways. We can create new objects of this class
+        //    by calling either one of these two constructors. This makes the creation of objects more flexible.
 
         // 1. Concept: Constructor chaining
-        // 2. How?
-        // 3. Why?
+        // 2. How? We use the syntax : this() in the second constructor. The keyword this refers to the same class.
+        //    and we pass on the parameters needed in the first constructor which in this case is name and type. 
+        //    The way this works is that when creating a new object by calling this second constructor,
+        //    the chained constructor is called first with name and type, and after that this constructor with three parameters
+        //    that called the chained constructor is executed.
+        // 3. Why? This enables code reuse, and avoids code duplication, as we can run the code from the chained constructor first
+        //    and therefore do not need to write the same code twice.
         public Pokemon(string name, IPokemonType type, int Level) : this(name, type)
         {
             this.Level = Level;
+            SetStatsBasedOfLevel();
+            RestoreHealth();
         }
 
         public void GenerateMoves(int numberOfMoves)
@@ -101,13 +121,14 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public Move ChooseMove()
         {
+
             bool isValid = false;
             int numberOfMovesAvailable = this.Moves.Count;
             string choice = "";
 
             do
             {
-                printer.Print("Press the number for which attack you want to do:\n");
+                printer.Print("Choose attack:\n");
 
                 for (int i = 0; i < numberOfMovesAvailable; i++)
                 {
@@ -145,18 +166,25 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public void TakeDamage(int damage)
         {
-            this.Health -= damage;
+            this.CurrentHealth -= damage;
         }
 
         public void IncreaseExperiencePointsBasedOf(Pokemon defeated)
         {
-            this.ExperiencePoints += defeated.Level * 10;
-            printer.Print($"{this.Name} gained {ExperiencePoints} experience points!");
+            this.ExperiencePoints += defeated.Level * levelFactor;
+            printer.Print($"{this.Name} gained {ExperiencePoints} XP!");
             
             if (this.ShouldLevelUp)
-                LevelUp();
+            {
+                while (this.ShouldLevelUp)
+                {
+                    LevelUp();
+                }
+                this.ExperiencePoints = 0;
+            }
             else
-                printer.Print($"Current experience points count: {this.ExperiencePoints}. You need {ExperiencePointsToLevelUp - this.ExperiencePoints} more to level up.");
+                printer.Print($"Current XP count: {this.ExperiencePoints}. You need {LevelThreshold - this.ExperiencePoints} more to level up.");
+
             Console.ReadKey();
         }
 
@@ -172,7 +200,6 @@ namespace PokemonAdventure.PokemonSpecifier
             Level++;
             printer.Print($"{this.Name} grew to level {this.Level}!");
             Thread.Sleep(pauseInMs);
-            this.ExperiencePoints = 0;
 
             SetStatsBasedOfLevel();
             PrintNewLevelStats();
@@ -181,14 +208,19 @@ namespace PokemonAdventure.PokemonSpecifier
         public void PrintNewLevelStats()
         {
             printer.Print($"Stats for {this.Name}:\n");
-            Console.WriteLine($"Max Health: {this.maxHealth} (+{maxHealth - GetMaxHealthForLevel(this.Level - 1)})");
+            Console.WriteLine($"Max HP: {this.maxHealth} (+{maxHealth - GetMaxHealthForLevel(this.Level - 1)})");
             Console.WriteLine($"Attack: {this.Power} (+{Power - GetPowerForLevel(this.Level - 1)})");
             Console.WriteLine($"Defence: {this.Defence} (+{Defence - GetDefenceForLevel(this.Level - 1)})");
         }
 
+        public void PrintStats(Pokemon pokemon)
+        {
+            printer.Print($"{Name}: HP: {CurrentHealth}/{maxHealth} XP: {ExperiencePoints}/{LevelThreshold}\n");
+        }
+
         public void RestoreHealth()
         {
-            Health = maxHealth;
+            CurrentHealth = maxHealth;
         }
 
         public int GetMaxHealthForLevel(int level)
@@ -198,5 +230,6 @@ namespace PokemonAdventure.PokemonSpecifier
             => level * 6;
         public int GetDefenceForLevel(int level)
             => level * 5;
+
     }
 }
