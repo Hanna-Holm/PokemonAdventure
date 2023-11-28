@@ -2,10 +2,6 @@
 using PokemonAdventure.UserInteraction;
 using PokemonAdventure.PokemonSpecifier;
 using PokemonAdventure.PokemonTypes;
-using System.Reflection;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System;
 
 namespace PokemonAdventure
 {
@@ -16,6 +12,7 @@ namespace PokemonAdventure
         private AllPokemon world = new AllPokemon();
         private PokemonGenerator PokemonGenerator = new PokemonGenerator();
         public Trainer player;
+        private List<Pokemon> availablePokemon;
         private Pokemon startingPokemon;
 
         public void Begin()
@@ -40,6 +37,7 @@ namespace PokemonAdventure
             printer.Print($"{player.Name} your Pokemon adventure begins now!");
             Console.ReadKey();
         }
+
         private void ExplainGame()
         {
             Console.Clear();

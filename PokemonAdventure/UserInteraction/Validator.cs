@@ -25,6 +25,7 @@ namespace PokemonAdventure.UserInteraction
             printer.Print($"Let's enter your name again.");
             return false;
         }
+
         public bool CheckIfValidNumber(ConsoleKeyInfo input, int numberOfChoices)
         {
             if (char.IsDigit(input.KeyChar))

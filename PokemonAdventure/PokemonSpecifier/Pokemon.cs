@@ -13,7 +13,12 @@ namespace PokemonAdventure.PokemonSpecifier
         public int ExperiencePoints { get; set; } = 0;
         private int levelFactor = 10;
         public int Level { get; set; } = 5;
-        public int LevelThreshold => Level * 10;
+
+        // 1. Concept: Computed properties
+        // 2. How? 
+        // 3. Why? 
+        public int LevelThreshold => Level * 9;
+
         public bool ShouldLevelUp
             => ExperiencePoints >= LevelThreshold;
         private int currentHealth;
@@ -76,7 +81,7 @@ namespace PokemonAdventure.PokemonSpecifier
             }
         }
 
-        public List<Move> TypeSpecificMoves { get; set; }
+        public List<Move> TypeSpecificMoves { get; }
         public List<Move> Moves { get; private set; } = new List<Move> { };
 
         private Validator validator = new Validator();
@@ -218,11 +223,9 @@ namespace PokemonAdventure.PokemonSpecifier
         public void LevelUp()
         {
             Level++;
-            printer.Print("Level up!");
             printer.Print($"{this.Name} grew to level {this.Level}!");
             Console.WriteLine();
             Thread.Sleep(pauseInMs);
-
 
             SetStatsBasedOfLevel();
             PrintNewLevelStats();
@@ -236,9 +239,9 @@ namespace PokemonAdventure.PokemonSpecifier
             Console.WriteLine($"Defence: {this.Defence} (+{Defence - GetDefenceForLevel(this.Level - 1)})");
         }
 
-        public void PrintStats(Pokemon pokemon)
+        public void PrintStats()
         {
-            printer.Print($"{Name}: HP: {CurrentHealth}/{MaxHealth} XP: {ExperiencePoints}/{LevelThreshold}\n");
+            Console.WriteLine($"{Name}\t HP: {CurrentHealth}/{MaxHealth} | Defence: {this.Defence} | Attack: {this.Power}");
         }
 
         public void RestoreHealth()
@@ -246,19 +249,17 @@ namespace PokemonAdventure.PokemonSpecifier
             CurrentHealth = MaxHealth;
         }
 
-        public void ResetAccuracyDefence()
-        {
-            this.Accuracy = accuracy;
-            this.Defence = defence;
-        }
-
         public int GetMaxHealthForLevel(int level)
             => level * 20;
 
         public int GetPowerForLevel(int level)
-            => level * 5;
+            => level * 6;
         public int GetDefenceForLevel(int level)
             => level * 5;
 
+        public Pokemon Clone()
+        {
+            return new Pokemon(this.Name, this.Type);
+        }
     }
 }

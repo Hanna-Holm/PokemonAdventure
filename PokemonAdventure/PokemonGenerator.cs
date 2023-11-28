@@ -17,8 +17,8 @@ namespace PokemonAdventure
         // 3. Why? 
         public Pokemon GeneratePokemon(AllPokemon all)
         {
-            // Pokemon pokemon = new Pokemon("Placeholder");
-            return all.KnownPokemon[new Random().Next(0, all.KnownPokemon.Count - 1)];
+            Pokemon samplePokemon = all.KnownPokemon[new Random().Next(0, all.KnownPokemon.Count - 1)];
+            return samplePokemon.Clone();
         }
 
         public Pokemon GeneratePokemon(AllPokemon all, Pokemon playerPokemon)

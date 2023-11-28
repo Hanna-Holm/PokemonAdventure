@@ -10,8 +10,8 @@ namespace PokemonAdventure
     internal class Battle
     {
         private Trainer player { get; init; }
-        private Trainer rival { get; init; } // Not being used?
-        public Pokemon playerPokemon { get; set; }
+        private Trainer rival { get; init; }
+        private Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
         public Pokemon Winner
         {
@@ -53,7 +53,6 @@ namespace PokemonAdventure
 
             while (!isOver)
             {
-
                 Move move = playerPokemon.ChooseMove();
                 playerPokemon.MakeMove(move, rivalPokemon);
                 Console.Clear();
@@ -84,13 +83,11 @@ namespace PokemonAdventure
             return rivalPokemon.Moves[index];
         }
 
-        private void CheckWhoWon()
+        public void ExecuteEndofBattleConsequence()
         {
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Clear();
+            Pokemon winner = playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon;
 
-            if (playerPokemon == Winner)
+            if (playerPokemon == winner)
             {
                 printer.Print($"Congratulations {player.Name}! \nYour Pokemon {playerPokemon.Name} won against {rivalPokemon.Name}!");
                 Console.ReadKey();
@@ -102,8 +99,10 @@ namespace PokemonAdventure
                 printer.Print($"{playerPokemon.Name} fainted!");
                 printer.Print("You lost!");
                 Console.ReadKey();
-                Console.Clear();
             }
+
+            playerPokemon.SetStatsBasedOfLevel();
+            playerPokemon.RestoreHealth();
         }
     }
 }
