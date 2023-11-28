@@ -17,6 +17,7 @@ namespace PokemonAdventure.Moves
     internal abstract class Move
     {
         public abstract string Name { get; init; }
+        public abstract string Description { get; }
         protected virtual int pauseInMs { get; set; } = 1000;
 
         // 1. Concept: Access modifier "Protected"
