@@ -18,7 +18,7 @@ namespace PokemonAdventure.Moves
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
         {
             base.GetUsedBy(attacker, target);
-            int totalDamage = (this.damage + attacker.Power - target.Defence);
+            int totalDamage = (this.damage + attacker.Power - target.Defence) / 5;
             target.TakeDamage(totalDamage);
             printer.Print($"{attacker.Name} made {totalDamage} damage to {target.Name}, who now has {target.CurrentHealth} health left.");
             Thread.Sleep(pauseInMs);
