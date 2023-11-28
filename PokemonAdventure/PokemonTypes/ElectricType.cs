@@ -8,13 +8,14 @@ namespace PokemonAdventure.PokemonTypes
         public List<Move> TypeSpecificMoves
             => new List<Move>
             {
-                new AttackMove("Thunder shock", 100),
-                new AttackMove("Bolt strike", 110),
-                new AttackMove("Spark", 90),
-                new AttackMove("Volt tackle", 120),
-                new AttackMove("Thunder wave", 110),
-                new DecreaseDefenceMove("Leer", 10),
-                new DecreaseAttackMove("Growl", 10)
+                new AttackMove("Thunder shock", 20),
+                new AttackMove("Bolt strike", 22),
+                new AttackMove("Spark", 18),
+                new AttackMove("Volt tackle", 24),
+                new AttackMove("Thunder wave", 22),
+                new DecreaseAccuracyMove("Sand attack", 2),
+                new DecreaseDefenceMove("Leer", 3),
+                new DecreaseAttackMove("Growl", 3)
             };
 
         public ElectricType()

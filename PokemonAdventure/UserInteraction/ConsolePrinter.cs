@@ -1,9 +1,12 @@
 ﻿
+using System.Reflection;
+
 namespace PokemonAdventure.UserInteraction
 {
     internal class ConsolePrinter
     {
-        private int pauseTimeInMs = 14;
+        private int pauseTimeInMs = 15;
+        private int slowTimeInMs = 80;
 
         public void Print(string text)
         {
@@ -22,6 +25,23 @@ namespace PokemonAdventure.UserInteraction
                         return;
                     }
                 }
+            }
+        }
+        public void LoadingScene()
+        {
+            Console.WriteLine();
+            string text = ". . . . . ";
+            int count = 3;
+
+            while (0 < count)
+            {
+                foreach (char t in text)
+                {
+                    Console.Write(t);
+                    Thread.Sleep(slowTimeInMs);
+                }
+                Console.WriteLine();
+                count--;
             }
         }
     }

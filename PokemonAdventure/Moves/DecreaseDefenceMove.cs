@@ -6,18 +6,18 @@ namespace PokemonAdventure.Moves
     internal class DecreaseDefenceMove : Move
     {
         public override string Name { get; init; }
-        public int Amount { get; init; }
+        public int DefenceDif { get; init; }
+        public override string Description { get; } = "Lowers target defence";
 
         public DecreaseDefenceMove(string name, int amount)
         {
             Name = name;
-            Amount = amount;
+            DefenceDif = amount;
         }
 
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
         {
             base.GetUsedBy(attacker, target);
-
             if (target.Defence == 0)
             {
                 printer.Print("But it failed.");
@@ -25,8 +25,8 @@ namespace PokemonAdventure.Moves
                 return;
             }
 
-            target.Defence -= this.Amount;
-            printer.Print($"{target.Name} lost {this.Amount} defence and now has {target.Defence} defence left!");
+            target.Defence -= this.DefenceDif;
+            printer.Print($"{target.Name} lost {this.DefenceDif} defence and now has {target.Defence} defence left!");
             Thread.Sleep(pauseInMs);
         }
     }

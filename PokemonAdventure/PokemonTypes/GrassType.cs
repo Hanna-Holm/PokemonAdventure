@@ -9,11 +9,13 @@ namespace PokemonAdventure.PokemonTypes
         public List<Move> TypeSpecificMoves
             => new List<Move>
             {
-                new AttackMove("Razor leaf", 110),
-                new AttackMove("Petal dance", 90),
-                new AttackMove("Vine whip", 100),
-                new DecreaseAttackMove("Growl", 10),
-                new DecreaseDefenceMove("Leer", 10)
+                new AttackMove("Razor leaf", 22),
+                new AttackMove("Petal dance", 18),
+                new AttackMove("Vine whip", 20),
+                new DecreaseAccuracyMove("Sand attack", 2),
+                new DecreaseAttackMove("Growl", 3),
+                new DecreaseDefenceMove("Leer", 3)
+                
             };
         public GrassType()
         {

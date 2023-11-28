@@ -9,7 +9,6 @@ namespace PokemonAdventure
         public List<Pokemon> capturedPokemon { get; private set; } = new List<Pokemon>();
         ConsolePrinter printer = new ConsolePrinter();
         Validator validator = new Validator();
-        public string Name { get; private set; }
         public List<Pokemon> CapturedPokemon { get; private set; }
 
 
@@ -22,7 +21,7 @@ namespace PokemonAdventure
         {
             do
             {
-                printer.Print("Enter your name.");
+                printer.Print("Enter your name: ");
                 Name = Console.ReadLine();
             } while (!validator.ConfirmName(Name));
         }

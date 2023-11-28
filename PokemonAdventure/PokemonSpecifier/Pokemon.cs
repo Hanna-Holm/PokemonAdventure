@@ -1,6 +1,7 @@
 ﻿using PokemonAdventure.Moves;
 using PokemonAdventure.PokemonTypes;
 using PokemonAdventure.UserInteraction;
+using System;
 
 namespace PokemonAdventure.PokemonSpecifier
 {
@@ -27,7 +28,7 @@ namespace PokemonAdventure.PokemonSpecifier
                     currentHealth = value;
             }
         }
-        private int maxHealth { get; set; }
+        public int MaxHealth { get; set; }
 
         // 1. Concept: Encapsulation
         // 2: How? We are hiding the backing field power by using the access modifier private.
@@ -50,10 +51,19 @@ namespace PokemonAdventure.PokemonSpecifier
                     power = value;
             }
         }
-
-        //public int Speed { get; set; } = 25;
-        //public int Accuracy { get; set; } = 3;
-        private int defence = 25;
+        public int accuracy { get; set; } = 9;
+        public int Accuracy
+        {
+            get => accuracy;
+            set
+            {
+                if (value < 0)
+                    accuracy = 0;
+                else
+                    accuracy = value;
+            }
+        }
+        public int defence = 25;
         public int Defence
         {
             get => defence;
@@ -121,10 +131,10 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public Move ChooseMove()
         {
-
             bool isValid = false;
             int numberOfMovesAvailable = this.Moves.Count;
-            string choice = "";
+            ConsoleKeyInfo choice;
+            string input = "";
 
             do
             {
@@ -132,18 +142,28 @@ namespace PokemonAdventure.PokemonSpecifier
 
                 for (int i = 0; i < numberOfMovesAvailable; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {this.Moves[i].Name}");
+                    Console.WriteLine($"{i + 1}. {this.Moves[i].Name} \t - {this.Moves[i].Description}");
                 }
-                choice = Console.ReadLine();
+                choice = Console.ReadKey();
                 isValid = validator.CheckIfValidNumber(choice, numberOfMovesAvailable);
             } while (!isValid);
 
-            int moveNumber = int.Parse(choice);
+            int moveNumber = int.Parse(choice.KeyChar.ToString());
+            Console.Clear();
             return this.Moves[moveNumber - 1];
         }
 
         public void MakeMove(Move move, Pokemon target)
         {
+            Random random = new Random();
+            bool missedAttack = random.Next(1, Accuracy) == 1; 
+
+            if (missedAttack)
+            {
+                printer.Print($"{this.Name} missed the attack!");
+                Console.ReadKey();
+                return; 
+            }
             // 1. Concept: Subtype-polymorfism
             // 2. How? The method GetUsedBy gets invoked on the run-time type of move.
             //    A Move can be any type derived from the abstract Move class.
@@ -190,7 +210,7 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public void SetStatsBasedOfLevel()
         {
-            this.maxHealth = GetMaxHealthForLevel(this.Level);
+            this.MaxHealth = GetMaxHealthForLevel(this.Level);
             this.Power = GetPowerForLevel(this.Level);
             this.Defence = GetDefenceForLevel(this.Level);
         }
@@ -198,8 +218,11 @@ namespace PokemonAdventure.PokemonSpecifier
         public void LevelUp()
         {
             Level++;
+            printer.Print("Level up!");
             printer.Print($"{this.Name} grew to level {this.Level}!");
+            Console.WriteLine();
             Thread.Sleep(pauseInMs);
+
 
             SetStatsBasedOfLevel();
             PrintNewLevelStats();
@@ -207,27 +230,33 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public void PrintNewLevelStats()
         {
-            printer.Print($"Stats for {this.Name}:\n");
-            Console.WriteLine($"Max HP: {this.maxHealth} (+{maxHealth - GetMaxHealthForLevel(this.Level - 1)})");
+            printer.Print($"{this.Name}:\n");
+            Console.WriteLine($"Max HP: {this.MaxHealth} (+{MaxHealth - GetMaxHealthForLevel(this.Level - 1)})");
             Console.WriteLine($"Attack: {this.Power} (+{Power - GetPowerForLevel(this.Level - 1)})");
             Console.WriteLine($"Defence: {this.Defence} (+{Defence - GetDefenceForLevel(this.Level - 1)})");
         }
 
         public void PrintStats(Pokemon pokemon)
         {
-            printer.Print($"{Name}: HP: {CurrentHealth}/{maxHealth} XP: {ExperiencePoints}/{LevelThreshold}\n");
+            printer.Print($"{Name}: HP: {CurrentHealth}/{MaxHealth} XP: {ExperiencePoints}/{LevelThreshold}\n");
         }
 
         public void RestoreHealth()
         {
-            CurrentHealth = maxHealth;
+            CurrentHealth = MaxHealth;
+        }
+
+        public void ResetAccuracyDefence()
+        {
+            this.Accuracy = accuracy;
+            this.Defence = defence;
         }
 
         public int GetMaxHealthForLevel(int level)
             => level * 20;
 
         public int GetPowerForLevel(int level)
-            => level * 6;
+            => level * 5;
         public int GetDefenceForLevel(int level)
             => level * 5;
 

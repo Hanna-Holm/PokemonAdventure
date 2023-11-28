@@ -10,20 +10,30 @@ namespace PokemonAdventure
     internal class PokemonGenerator
     {
         private int levelOffset = 2;
+        private int gymLeaderLevel = 8; 
 
         // 1. Concept: Method overloading
         // 2. How? 
         // 3. Why? 
-        public Pokemon GeneratePokemon(AllPokemon world)
+        public Pokemon GeneratePokemon(AllPokemon all)
         {
-            Pokemon pokemon = new Pokemon("Placeholder");
-            return world.KnownPokemon[new Random().Next(0, world.KnownPokemon.Count - 1)];
+            // Pokemon pokemon = new Pokemon("Placeholder");
+            return all.KnownPokemon[new Random().Next(0, all.KnownPokemon.Count - 1)];
         }
 
-        public Pokemon GeneratePokemon(AllPokemon world, Pokemon playerPokemon)
+        public Pokemon GeneratePokemon(AllPokemon all, Pokemon playerPokemon)
         {
-            Pokemon pokemon = GeneratePokemon(world);
+            Pokemon pokemon = GeneratePokemon(all);
             int rivalLevel = GenerateLevel(playerPokemon.Level);
+            pokemon.Level = rivalLevel;
+            pokemon.SetStatsBasedOfLevel();
+            pokemon.RestoreHealth();
+            return pokemon;
+        }
+        public Pokemon GenerateGymLeaderPokemon(AllPokemon all)
+        {
+            Pokemon pokemon = GeneratePokemon(all);
+            int rivalLevel = gymLeaderLevel;
             pokemon.Level = rivalLevel;
             pokemon.SetStatsBasedOfLevel();
             pokemon.RestoreHealth();

@@ -5,12 +5,13 @@ namespace PokemonAdventure.Moves
     internal class DecreaseAttackMove : Move
     {
         public override string Name { get; init; }
-        private int Amount { get; init; }
+        private int powerDif { get; init; }
+        public override string Description { get; } = "Lowers target attack";
 
         public DecreaseAttackMove(string name, int amount)
         {
             Name = name;
-            Amount = amount;
+            this.powerDif = amount;
         }
 
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
@@ -22,8 +23,8 @@ namespace PokemonAdventure.Moves
                 Thread.Sleep(pauseInMs);
                 return;
             }
-            target.Power -= this.Amount;
-            printer.Print($"{target.Name}s attack decreased with {this.Amount} and is now {target.Power}!");
+            target.Power -= this.powerDif;
+            printer.Print($"{target.Name}s attack decreased with {this.powerDif} and is now {target.Power}!");
             Thread.Sleep(pauseInMs);
         }
     }
