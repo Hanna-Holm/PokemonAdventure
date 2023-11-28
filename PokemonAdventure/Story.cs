@@ -24,7 +24,7 @@ namespace PokemonAdventure
 
             startingPokemon = PokemonGenerator.GeneratePokemon(world);
             InitializePlayer(startingPokemon);
-            ExplainGame();
+            //ExplainGame();
             Console.Clear();
             Training();
         }
@@ -127,7 +127,6 @@ namespace PokemonAdventure
         private Trainer GenerateGymLeader()
         {
             Pokemon rivalPokemon = PokemonGenerator.GenerateGymLeaderPokemon(world);
-            rivalPokemon.Accuracy += 2; 
             rivalPokemon.Name = "Leader " + rivalPokemon.Name;
             return new Trainer(rivalPokemon);
         }

@@ -11,7 +11,7 @@ namespace PokemonAdventure
     {
         private Trainer player { get; init; }
         private Trainer rival { get; init; }
-        private Pokemon playerPokemon { get; set; }
+        public Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
         public Pokemon Winner
         {
@@ -48,7 +48,6 @@ namespace PokemonAdventure
             printer.Print($"{player.Name} sends out a Pokemon:");
             printer.Print($"{playerPokemon.Name}, go!");
             Thread.Sleep(pauseInMs);
-            Console.ReadKey();
             Console.Clear();
 
             while (!isOver)
@@ -57,21 +56,22 @@ namespace PokemonAdventure
                 playerPokemon.MakeMove(move, rivalPokemon);
                 Console.Clear();
 
-                if (isOver) break;
+                if (isOver)
+                {
+                    printer.Print($"{rivalPokemon.Name} fainted!");
+                    Thread.Sleep(pauseInMs);
+                    break; 
+                }
 
                 rivalPokemon.MakeMove(GenerateRivalMove(), playerPokemon);
                 Console.Clear();
 
-                if (isOver) break;
-
-                playerPokemon.PrintStats(playerPokemon);
-                rivalPokemon.PrintStats(rivalPokemon);
+                playerPokemon.PrintStats();
+                rivalPokemon.PrintStats();
             }
-            printer.Print($"{rivalPokemon.Name} fainted!");
-            Console.ReadKey();
-            Console.Clear(); 
+            Console.Clear();
 
-            CheckWhoWon();
+            ExecuteEndofBattleConsequence();
             playerPokemon.SetStatsBasedOfLevel();
             rivalPokemon.RestoreHealth();
         }

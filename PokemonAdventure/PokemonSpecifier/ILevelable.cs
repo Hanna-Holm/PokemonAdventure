@@ -5,7 +5,7 @@
         public int ExperiencePoints { get; set; }
         public int Level { get; set; }
         public bool ShouldLevelUp {  get; }
-        public int LevelThreshold { get; }
+        public double LevelThreshold { get; }
         public void LevelUp();
         public int GetMaxHealthForLevel(int level);
         public int GetPowerForLevel(int level);

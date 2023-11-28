@@ -17,7 +17,7 @@ namespace PokemonAdventure.PokemonSpecifier
         // 1. Concept: Computed properties
         // 2. How? 
         // 3. Why? 
-        public int LevelThreshold => Level * 9;
+        public double LevelThreshold => Math.Pow(Level, 2) * 2;
 
         public bool ShouldLevelUp
             => ExperiencePoints >= LevelThreshold;
@@ -62,8 +62,8 @@ namespace PokemonAdventure.PokemonSpecifier
             get => accuracy;
             set
             {
-                if (value < 0)
-                    accuracy = 0;
+                if (value < 3)
+                    accuracy = 3;
                 else
                     accuracy = value;
             }
@@ -120,7 +120,7 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public void GenerateMoves(int numberOfMoves)
         {
-            int random = new Random().Next(0, Type.TypeSpecificMoves.Count - numberOfMoves);
+            int random = new Random().Next(0, Type.TypeSpecificMoves.Count - numberOfMoves + 1);
 
             for (int i = 0; i < numberOfMoves; i++)
             {

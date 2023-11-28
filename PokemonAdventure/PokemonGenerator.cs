@@ -35,6 +35,7 @@ namespace PokemonAdventure
             Pokemon pokemon = GeneratePokemon(all);
             int rivalLevel = gymLeaderLevel;
             pokemon.Level = rivalLevel;
+            pokemon.Accuracy += 2;
             pokemon.SetStatsBasedOfLevel();
             pokemon.RestoreHealth();
             return pokemon;
