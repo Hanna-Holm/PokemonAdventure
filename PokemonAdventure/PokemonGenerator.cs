@@ -3,10 +3,8 @@ using PokemonAdventure.PokemonTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace PokemonAdventure
 {
@@ -37,6 +35,16 @@ namespace PokemonAdventure
             Pokemon pokemon = GeneratePokemon(all);
             pokemon = new Pokemon(pokemon, gymLeaderLevel);
             pokemon.Accuracy += 2;
+            return pokemon;
+        }
+        public Pokemon GenerateGymLeaderPokemon(AllPokemon all)
+        {
+            Pokemon pokemon = GeneratePokemon(all);
+            int rivalLevel = gymLeaderLevel;
+            pokemon.Level = rivalLevel;
+            pokemon.Accuracy += 2;
+            pokemon.SetStatsBasedOfLevel();
+            pokemon.RestoreHealth();
             return pokemon;
         }
 

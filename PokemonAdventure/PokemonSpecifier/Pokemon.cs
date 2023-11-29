@@ -1,6 +1,7 @@
 ﻿using PokemonAdventure.Moves;
 using PokemonAdventure.PokemonTypes;
 using PokemonAdventure.UserInteraction;
+using System;
 
 namespace PokemonAdventure.PokemonSpecifier
 {
@@ -16,7 +17,7 @@ namespace PokemonAdventure.PokemonSpecifier
         // 1. Concept: Computed properties
         // 2. How? 
         // 3. Why? 
-        public double LevelThreshold => 2 * (Math.Pow(Level, 2));
+        public double LevelThreshold => Math.Pow(Level, 2) * 2;
 
         public bool ShouldLevelUp
             => ExperiencePoints >= LevelThreshold;
@@ -128,7 +129,6 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public Move ChooseMove()
         {
-
             bool isValid = false;
             int numberOfMovesAvailable = this.Moves.Count;
             ConsoleKeyInfo choice;
@@ -217,6 +217,7 @@ namespace PokemonAdventure.PokemonSpecifier
         {
             Level++;
             printer.Print($"{this.Name} grew to level {this.Level}!");
+            Console.WriteLine();
             Thread.Sleep(pauseInMs);
 
             SetStatsBasedOfLevel();

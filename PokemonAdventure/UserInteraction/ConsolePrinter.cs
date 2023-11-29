@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection;
+
 namespace PokemonAdventure.UserInteraction
 {
     internal class ConsolePrinter

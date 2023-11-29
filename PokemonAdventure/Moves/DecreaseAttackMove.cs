@@ -5,6 +5,7 @@ namespace PokemonAdventure.Moves
     internal class DecreaseAttackMove : Move
     {
         public override string Name { get; init; }
+        private int powerDif { get; init; }
         public override string Description { get; } = "Lowers target attack";
         private readonly int powerDecrease;
 

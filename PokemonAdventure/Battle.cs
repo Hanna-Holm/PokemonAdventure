@@ -35,8 +35,10 @@ namespace PokemonAdventure
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
+            printer.Print("[ Enters battle! ]");
+            Console.ReadKey();
+            Console.Clear();
 
-            printer.Print("A rival trainer appears and wants to battle!");
             printer.Print($"Rival sends out {rivalPokemon.Name} level {rivalPokemon.Level} and health {rivalPokemon.CurrentHealth}");
             Thread.Sleep(pauseInMs);
             Console.ReadKey();
@@ -67,6 +69,7 @@ namespace PokemonAdventure
                 playerPokemon.PrintStats();
                 rivalPokemon.PrintStats();
             }
+
         }
 
         private Move GenerateRivalMove()

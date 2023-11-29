@@ -15,6 +15,7 @@ namespace PokemonAdventure.PokemonTypes
                 new DecreaseAccuracyMove("Sand attack", 2),
                 new DecreaseAttackMove("Growl", 10),
                 new DecreaseDefenceMove("Leer", 10)
+                
             };
         public GrassType()
         {

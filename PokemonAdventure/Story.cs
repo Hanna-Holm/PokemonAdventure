@@ -8,9 +8,11 @@ namespace PokemonAdventure
     internal class Story
     {
         private ConsolePrinter printer = new ConsolePrinter();
+        private Validator validator = new Validator();
         private AllPokemon world = new AllPokemon();
         private PokemonGenerator PokemonGenerator = new PokemonGenerator();
         public Trainer player;
+        private List<Pokemon> availablePokemon;
         private Pokemon startingPokemon;
         private int pauseInMs = 1000;
 
@@ -19,7 +21,6 @@ namespace PokemonAdventure
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Clear();
-
             printer.Print("Welcome to the world of Pokemon.");
 
             startingPokemon = PokemonGenerator.GeneratePokemon(world);
@@ -45,7 +46,7 @@ namespace PokemonAdventure
         {
             Console.Clear();
             printer.Print("You are now on your journey to become a Pokemon master,");
-            printer.Print("to become the greatest Pokemon trainer of them all!");
+            printer.Print("the greatest Pokemon trainer of them all!");
             Console.ReadKey();
             Console.Clear();
             printer.Print("There are several types of Pokemon - creatures that exists in the wild.");
