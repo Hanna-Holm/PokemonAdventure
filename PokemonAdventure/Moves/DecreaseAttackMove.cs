@@ -6,26 +6,26 @@ namespace PokemonAdventure.Moves
     {
         public override string Name { get; init; }
         public override string Description { get; } = "Lowers target attack";
-        private int Amount { get; init; }
+        private readonly int powerDecrease;
 
-        public DecreaseAttackMove(string name, int amount)
+        public DecreaseAttackMove(string name, int powerDecrease)
         {
             Name = name;
-            Amount = amount;
+            this.powerDecrease = powerDecrease;
         }
 
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
         {
-            base.GetUsedBy(attacker, target);
+            PrintUsingMessage(attacker);
+
             if (target.Power == 0)
             {
-                printer.Print("But it failed.");
-                Thread.Sleep(pauseInMs);
+                PrintAndPause("But it failed.");
                 return;
             }
-            target.Power -= this.Amount;
-            printer.Print($"{target.Name}s attack decreased with {this.Amount} and is now {target.Power}!");
-            Thread.Sleep(pauseInMs);
+            target.Power -= this.powerDecrease;
+
+            PrintAndPause($"{target.Name}s attack decreased with {this.powerDecrease} and is now {target.Power}!");
         }
     }
 }

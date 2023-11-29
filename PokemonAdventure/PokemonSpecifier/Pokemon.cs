@@ -16,7 +16,7 @@ namespace PokemonAdventure.PokemonSpecifier
         // 1. Concept: Computed properties
         // 2. How? 
         // 3. Why? 
-        public int LevelThreshold => Level * 9;
+        public double LevelThreshold => 2 * (Math.Pow(Level, 2));
 
         public bool ShouldLevelUp
             => ExperiencePoints >= LevelThreshold;
@@ -56,7 +56,18 @@ namespace PokemonAdventure.PokemonSpecifier
             }
         }
 
-        public int Accuracy { get; set; } = 10;
+        private int accuracy = 9;
+        public int Accuracy
+        {
+            get => accuracy;
+            set
+            {
+                if (value < 3)
+                    accuracy = 3;
+                else
+                    accuracy = value;
+            }
+        }
 
         private int defence = 25;
         public int Defence
@@ -82,14 +93,12 @@ namespace PokemonAdventure.PokemonSpecifier
         {
             this.Name = name;
             this.Type = type;
-            SetStatsBasedOfLevel();
-            RestoreHealth();
             GenerateMoves(4);
         }
 
         // 1. Concept: Constructor overload
         // 2. How? We define two different constructors in this class, one the that takes the parameters
-        //    string name and IPokemonType, and one that takes the parameters string name, IPokemonType type and int Level
+        //    string name and IPokemonType, and one that takes the parameters Pokemon pokemon and int Level
         // 3. Why? This enables object construction is two different ways. We can create new objects of this class
         //    by calling either one of these two constructors. This makes the creation of objects more flexible.
 
@@ -97,31 +106,24 @@ namespace PokemonAdventure.PokemonSpecifier
         // 2. How? We use the syntax : this() in the second constructor. The keyword this refers to the same class.
         //    and we pass on the parameters needed in the first constructor which in this case is name and type. 
         //    The way this works is that when creating a new object by calling this second constructor,
-        //    the chained constructor is called first with name and type, and after that this constructor with three parameters
+        //    the chained constructor is called first with name and type, and after that this constructor
         //    that called the chained constructor is executed.
         // 3. Why? This enables code reuse, and avoids code duplication, as we can run the code from the chained constructor first
         //    and therefore do not need to write the same code twice.
-        public Pokemon(string name, IPokemonType type, int Level) : this(name, type)
+        public Pokemon(Pokemon pokemon, int Level) : this(pokemon.Name, pokemon.Type)
         {
             this.Level = Level;
-            SetStatsBasedOfLevel();
-            RestoreHealth();
         }
 
         public void GenerateMoves(int numberOfMoves)
         {
-            int random = new Random().Next(0, Type.TypeSpecificMoves.Count - numberOfMoves);
+            int random = new Random().Next(0, Type.TypeSpecificMoves.Count - numberOfMoves + 1);
 
             for (int i = 0; i < numberOfMoves; i++)
             {
                 Moves.Add(Type.TypeSpecificMoves[random]);
                 random++;
             }
-        }
-
-        public void LearnNewMove(Move newMove)
-        {
-            this.Moves.Add(newMove);
         }
 
         public Move ChooseMove()
@@ -151,6 +153,15 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public void MakeMove(Move move, Pokemon target)
         {
+            bool missedAttack = new Random().Next(1, Accuracy) == 1;
+
+            if (missedAttack)
+            {
+                printer.Print($"{this.Name} missed the attack!");
+                Console.ReadKey();
+                return;
+            }
+
             // 1. Concept: Subtype-polymorfism
             // 2. How? The method GetUsedBy gets invoked on the run-time type of move.
             //    A Move can be any type derived from the abstract Move class.
@@ -179,7 +190,7 @@ namespace PokemonAdventure.PokemonSpecifier
         public void IncreaseExperiencePointsBasedOf(Pokemon defeated)
         {
             this.ExperiencePoints += defeated.Level * levelFactor;
-            printer.Print($"{this.Name} gained {ExperiencePoints} XP!");
+            printer.Print($"{this.Name} gained {defeated.Level * levelFactor} XP!");
             
             if (this.ShouldLevelUp)
             {
@@ -214,15 +225,14 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public void PrintNewLevelStats()
         {
-            printer.Print($"Stats for {this.Name}:\n");
-            Console.WriteLine($"Max HP: {this.MaxHealth} (+{MaxHealth - GetMaxHealthForLevel(this.Level - 1)})");
+            Console.WriteLine($"\nMax HP: {this.MaxHealth} (+{MaxHealth - GetMaxHealthForLevel(this.Level - 1)})");
             Console.WriteLine($"Attack: {this.Power} (+{Power - GetPowerForLevel(this.Level - 1)})");
             Console.WriteLine($"Defence: {this.Defence} (+{Defence - GetDefenceForLevel(this.Level - 1)})");
         }
 
         public void PrintStats()
         {
-            Console.WriteLine($"{Name}\t HP: {CurrentHealth}/{MaxHealth} | Defence: {this.Defence} | Attack: {this.Power}");
+            Console.WriteLine($"Level {Level} {Name}\t HP: {CurrentHealth}/{MaxHealth} | Defence: {this.Defence} | Attack: {this.Power}");
         }
 
         public void RestoreHealth()

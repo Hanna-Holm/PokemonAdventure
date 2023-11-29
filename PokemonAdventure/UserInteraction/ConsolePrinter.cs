@@ -4,6 +4,7 @@ namespace PokemonAdventure.UserInteraction
     internal class ConsolePrinter
     {
         private int pauseTimeInMs = 14;
+        private int slowTimeInMs = 130;
 
         public void Print(string text)
         {
@@ -22,6 +23,24 @@ namespace PokemonAdventure.UserInteraction
                         return;
                     }
                 }
+            }
+        }
+
+        public void LoadingScene()
+        {
+            Console.WriteLine();
+            string text = ". . .";
+            int count = 2;
+
+            while (0 < count)
+            {
+                foreach (char t in text)
+                {
+                    Console.Write(t);
+                    Thread.Sleep(slowTimeInMs);
+                }
+                Console.WriteLine();
+                count--;
             }
         }
     }

@@ -7,28 +7,26 @@ namespace PokemonAdventure.Moves
     {
         public override string Name { get; init; }
         public override string Description { get; } = "Lowers target defence";
-        public int Amount { get; init; }
+        private readonly int defenceDecrease;
 
-        public DecreaseDefenceMove(string name, int amount)
+        public DecreaseDefenceMove(string name, int defenceDecrease)
         {
             Name = name;
-            Amount = amount;
+            this.defenceDecrease = defenceDecrease;
         }
 
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
         {
-            base.GetUsedBy(attacker, target);
+            PrintUsingMessage(attacker);
 
             if (target.Defence == 0)
             {
-                printer.Print("But it failed.");
-                Thread.Sleep(pauseInMs);
+                PrintAndPause("But it failed.");
                 return;
             }
 
-            target.Defence -= this.Amount;
-            printer.Print($"{target.Name} lost {this.Amount} defence and now has {target.Defence} defence left!");
-            Thread.Sleep(pauseInMs);
+            target.Defence -= this.defenceDecrease;
+            PrintAndPause($"{target.Name} lost {this.defenceDecrease} defence and now has {target.Defence} defence left!");
         }
     }
 }

@@ -11,6 +11,7 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Scratch", 80),
                 new AttackMove("Bite", 110),
                 new DecreaseAttackMove("Growl", 10),
+                new DecreaseAccuracyMove("Sand attack", 2),
                 new DecreaseDefenceMove("Leer", 10)
             };
         public NormalType()

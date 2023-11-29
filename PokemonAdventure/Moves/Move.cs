@@ -18,23 +18,24 @@ namespace PokemonAdventure.Moves
     {
         public abstract string Name { get; init; }
         public abstract string Description { get; }
-        protected virtual int pauseInMs { get; set; } = 1000;
+        private int pauseInMs { get; set; } = 1000;
+
+        private ConsolePrinter printer = new ConsolePrinter();
 
         // 1. Concept: Access modifier "Protected"
-        // 2. How? using the access modifier keyword 'protected' on a field in the Move class
-        //    (which is an object of type ConsolePrinter).
-        // 3. Why? So that derived classes can use this printer object to call the Print() method
-        //    on it to print to console RPG-style, without having to declare it themselves.
-        //    The ConsolePrinter object gets inherited to and will be accessible to all derived types 
-        //    as well as within this class, but not from any other types.
-        //    This enables code reuse, we don't need to initialize a new ConsolePrinter object 
-        //    in the derived classes, which saves us from unneccesary code duplication.
-        protected ConsolePrinter printer = new ConsolePrinter();
-
-        public virtual void GetUsedBy(Pokemon attacker, Pokemon target)
+        // 2. How? using the access modifier keyword 'protected'
+        // 3. Why? 
+        protected void PrintAndPause(string message)
         {
-            printer.Print($"{attacker.Name} used {this.Name}!");
+            printer.Print(message);
             Thread.Sleep(pauseInMs);
+        }
+
+        public abstract void GetUsedBy(Pokemon attacker, Pokemon target);
+
+        protected void PrintUsingMessage(Pokemon attacker)
+        {
+            PrintAndPause($"{attacker.Name} used {this.Name}!");
         }
     }
 }

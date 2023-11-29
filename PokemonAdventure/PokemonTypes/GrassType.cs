@@ -12,6 +12,7 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Razor leaf", 110),
                 new AttackMove("Petal dance", 90),
                 new AttackMove("Vine whip", 100),
+                new DecreaseAccuracyMove("Sand attack", 2),
                 new DecreaseAttackMove("Growl", 10),
                 new DecreaseDefenceMove("Leer", 10)
             };

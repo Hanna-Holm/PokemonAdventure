@@ -12,6 +12,7 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Water gun", 90),
                 new AttackMove("Surf", 110),
                 new AttackMove("Bubble beam", 100),
+                new DecreaseAccuracyMove("Sand attack", 2),
                 new AttackMove("Bubble", 90),
                 new DecreaseAttackMove("Growl", 10),
                 new DecreaseDefenceMove("Leer", 10)

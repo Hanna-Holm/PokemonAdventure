@@ -11,6 +11,7 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Thunder shock", 100),
                 new AttackMove("Bolt strike", 110),
                 new AttackMove("Spark", 90),
+                new DecreaseAccuracyMove("Sand attack", 2),
                 new AttackMove("Volt tackle", 120),
                 new AttackMove("Thunder wave", 110),
                 new DecreaseDefenceMove("Leer", 10),

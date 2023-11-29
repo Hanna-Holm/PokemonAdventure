@@ -13,6 +13,7 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Gust", 80),
                 new AttackMove("Wing attack", 90),
                 new AttackMove("Peck", 100),
+                new DecreaseAccuracyMove("Sand attack", 2),
                 new DecreaseAttackMove("Growl", 10),
                 new DecreaseDefenceMove("Leer", 10)
             };

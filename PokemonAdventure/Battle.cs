@@ -10,9 +10,12 @@ namespace PokemonAdventure
     internal class Battle
     {
         private Trainer player { get; init; }
-        private Trainer rival { get; init; }
-        private Pokemon playerPokemon { get; set; }
+        public Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
+        public Pokemon Winner
+        {
+            get => playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon;
+        }
         private bool isOver
             => playerPokemon.CurrentHealth <= 0 || rivalPokemon.CurrentHealth <= 0;
 
@@ -22,7 +25,6 @@ namespace PokemonAdventure
         public Battle(Trainer player, Trainer rival)
         {
             this.player = player;
-            this.rival = rival;
             this.playerPokemon = player.capturedPokemon[0];
             this.rivalPokemon = rival.capturedPokemon[0];
         }
@@ -62,12 +64,9 @@ namespace PokemonAdventure
                 rivalPokemon.MakeMove(GenerateRivalMove(), playerPokemon);
                 Console.Clear();
 
-                printer.Print("Current stats: \n");
                 playerPokemon.PrintStats();
                 rivalPokemon.PrintStats();
-                Console.WriteLine();
             }
-
         }
 
         private Move GenerateRivalMove()

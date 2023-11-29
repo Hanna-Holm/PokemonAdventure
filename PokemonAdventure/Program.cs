@@ -20,7 +20,7 @@ namespace PokemonAdventure
 ");
 
             ConsolePrinter printer = new ConsolePrinter();
-            printer.Print("\t    Press Enter to start your Adventure.");
+            printer.Print("\t    Press [Enter] to start your Adventure.");
 
             string input = "";
             do
