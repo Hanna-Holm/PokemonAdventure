@@ -6,7 +6,7 @@ namespace PokemonAdventure.UserInteraction
     internal class ConsolePrinter
     {
         private int pauseTimeInMs = 15;
-        private int slowTimeInMs = 80;
+        private int slowTimeInMs = 60;
 
         public void Print(string text)
         {

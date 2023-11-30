@@ -6,7 +6,7 @@ namespace PokemonAdventure.Moves
     {
         public override string Name { get; init; }
         private int powerDif { get; init; }
-        public override string Description { get; } = "Lowers target attack";
+        public override string Description => "Lowers target attack";
 
         public DecreaseAttackMove(string name, int amount)
         {

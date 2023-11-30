@@ -11,7 +11,7 @@ namespace PokemonAdventure.Moves
     {
         public override string Name { get; init; }
         private int accuracyDif { get; init; }
-        public override string Description { get; } = "Lowers target accuracy";
+        public override string Description => "Lowers target accuracy";
 
         public DecreaseAccuracyMove(string name, int accuracyDif)
         {

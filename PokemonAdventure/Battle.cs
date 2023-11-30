@@ -13,14 +13,8 @@ namespace PokemonAdventure
         private Trainer rival { get; init; }
         public Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
-        public Pokemon Winner
-        {
-            get => playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon; 
-            set { }
-        }
-        private bool isOver
-            => playerPokemon.CurrentHealth <= 0 || rivalPokemon.CurrentHealth <= 0;
-
+        public Pokemon Winner => playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon; 
+        private bool isOver => playerPokemon.CurrentHealth <= 0 || rivalPokemon.CurrentHealth <= 0;
         private ConsolePrinter printer = new ConsolePrinter();
         private int pauseInMs = 1000;
 

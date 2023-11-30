@@ -17,9 +17,6 @@ namespace PokemonAdventure.PokemonTypes
                 new DecreaseDefenceMove("Leer", 10)
                 
             };
-        public FireType()
-        {
-            TypeName = "Fire";
-        }
+        public FireType() => TypeName = "Fire";
     }
 }

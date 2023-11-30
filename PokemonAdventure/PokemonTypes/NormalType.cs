@@ -15,9 +15,6 @@ namespace PokemonAdventure.PokemonTypes
                 new DecreaseDefenceMove("Leer", 10)
                 
             };
-        public NormalType()
-        {
-            TypeName = "Normal";
-        }
+        public NormalType() => TypeName = "Normal";
     }
 }

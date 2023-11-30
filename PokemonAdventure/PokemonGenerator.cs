@@ -13,8 +13,9 @@ namespace PokemonAdventure
         private int gymLeaderLevel = 8; 
 
         // 1. Concept: Method overloading
-        // 2. How? 
-        // 3. Why? 
+        // 2. How? We have two methods with the same name but taking different parameters.
+        // 3. Why? This is to create more readability, that these methods 
+        // do the same thing just in a slightly different way 
         public Pokemon GeneratePokemon(AllPokemon all)
         {
             Pokemon samplePokemon = all.KnownPokemon[new Random().Next(0, all.KnownPokemon.Count - 1)];

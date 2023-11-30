@@ -5,6 +5,12 @@ using System;
 
 namespace PokemonAdventure.PokemonSpecifier
 {
+    // 1. Concept: Multiple interfaces 
+    // 2. How? Pokemons use multiple interfaces such as ILevelable, IHealable, IDamageable, IPokemonType
+    // all these are interfaces that pokemons implement.
+    // 3. Pokemons have multiple attributes from all these interfaces making them
+    // for example both an ILevelable as well as an IPokemonType.
+    // Allows for reuseability. 
     internal class Pokemon : ILevelable, IHealable, IDamageable, IPokemonType
     {
         public string Name { get; set; }
@@ -15,12 +21,13 @@ namespace PokemonAdventure.PokemonSpecifier
         public int Level { get; set; } = 5;
 
         // 1. Concept: Computed properties
-        // 2. How? 
-        // 3. Why? 
+        // 2. How? The computed property caluclates the LevelThreshold a needed variable to know when the pokemon should level up
+        // this is done by an instance of the vairable Level.
+        // 3. Why? This removes the need for a seperate method to calucalte this value. Each access triggers a new calucaltion
+        // which is needed every time we need to see if a pokemon should level up or not. 
         public double LevelThreshold => Math.Pow(Level, 2) * 2;
 
-        public bool ShouldLevelUp
-            => ExperiencePoints >= LevelThreshold;
+        public bool ShouldLevelUp => ExperiencePoints >= LevelThreshold;
         private int currentHealth;
         public int CurrentHealth
         {
@@ -88,6 +95,9 @@ namespace PokemonAdventure.PokemonSpecifier
         private ConsolePrinter printer = new ConsolePrinter();
         private int pauseInMs = 1000;
 
+        // 1. Concept: Dependency injection 
+        // 2. How? Creating a pokemon as an IPokemonType.32
+        // 3. Why? 
         public Pokemon(string name, IPokemonType type)
         {
             this.Name = name;
@@ -129,10 +139,7 @@ namespace PokemonAdventure.PokemonSpecifier
             }
         }
 
-        public void LearnNewMove(Move newMove)
-        {
-            this.Moves.Add(newMove);
-        }
+        public void LearnNewMove(Move newMove) => this.Moves.Add(newMove);
 
         public Move ChooseMove()
         {
@@ -189,16 +196,13 @@ namespace PokemonAdventure.PokemonSpecifier
             Console.ReadKey();
         }
 
-        public void TakeDamage(int damage)
-        {
-            this.CurrentHealth -= damage;
-        }
+        public void TakeDamage(int damage) => this.CurrentHealth -= damage;
 
         public void IncreaseExperiencePointsBasedOf(Pokemon defeated)
         {
             this.ExperiencePoints += defeated.Level * levelFactor;
-            printer.Print($"{this.Name} gained {ExperiencePoints} XP!");
-            
+            printer.Print($"{this.Name} gained {defeated.Level * levelFactor} XP!");
+
             if (this.ShouldLevelUp)
             {
                 while (this.ShouldLevelUp)
@@ -239,27 +243,15 @@ namespace PokemonAdventure.PokemonSpecifier
             Console.WriteLine($"Defence: {this.Defence} (+{Defence - GetDefenceForLevel(this.Level - 1)})");
         }
 
-        public void PrintStats()
-        {
-            Console.WriteLine($"{Name}\t HP: {CurrentHealth}/{MaxHealth} | Defence: {this.Defence} | Attack: {this.Power}");
-        }
+        public void PrintStats() => Console.WriteLine($"{Name}\t HP: {CurrentHealth}/{MaxHealth} | Defence: {this.Defence} | Attack: {this.Power}");
 
-        public void RestoreHealth()
-        {
-            CurrentHealth = MaxHealth;
-        }
+        public void RestoreHealth() => CurrentHealth = MaxHealth;
 
-        public int GetMaxHealthForLevel(int level)
-            => level * 20;
+        public int GetMaxHealthForLevel(int level) => level * 20;
 
-        public int GetPowerForLevel(int level)
-            => level * 6;
-        public int GetDefenceForLevel(int level)
-            => level * 5;
+        public int GetPowerForLevel(int level) => level * 6;
+        public int GetDefenceForLevel(int level) => level * 5;
 
-        public Pokemon Clone()
-        {
-            return new Pokemon(this.Name, this.Type);
-        }
+        public Pokemon Clone() => new Pokemon(this.Name, this.Type);
     }
 }

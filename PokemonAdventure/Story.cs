@@ -12,7 +12,6 @@ namespace PokemonAdventure
         private AllPokemon world = new AllPokemon();
         private PokemonGenerator PokemonGenerator = new PokemonGenerator();
         public Trainer player;
-        private List<Pokemon> availablePokemon;
         private Pokemon startingPokemon;
 
         public void Begin()
@@ -24,9 +23,9 @@ namespace PokemonAdventure
 
             startingPokemon = PokemonGenerator.GeneratePokemon(world);
             InitializePlayer(startingPokemon);
-            //ExplainGame();
+            ExplainGame();
             Console.Clear();
-            Training();
+            BattleAgainstTrainer();
         }
 
         private void InitializePlayer(Pokemon startingPokemon)
@@ -63,7 +62,7 @@ namespace PokemonAdventure
             printer.Print("Get ready to begin your adventure!");
             Console.ReadKey();
         }
-        public void Training()
+        public void BattleAgainstTrainer()
         {
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -98,28 +97,29 @@ namespace PokemonAdventure
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Clear();
             printer.LoadingScene();
-            Console.Clear();
-            printer.Print("Do you want to keep on training or meet the gym leader?\n");
-            Console.WriteLine("1. Keep on training");
-            Console.WriteLine("2. Battle against the gym leader!");
-
+            
             bool isValid = false;
             int numberOfMovesAvailable = 2;
-            string choice = Console.ReadLine();
-
-            /*
+            ConsoleKeyInfo choice;
+            string input = "";
+            
             do
             {
-                choice = Console.ReadLine();
+                Console.Clear();
+                printer.Print("Do you want to keep on training or meet the gym leader?\n");
+                Console.WriteLine("1. Keep on training");
+                Console.WriteLine("2. Battle against the gym leader!");
+                choice = Console.ReadKey();
                 isValid = validator.CheckIfValidNumber(choice, numberOfMovesAvailable);
-            } while (!isValid);
-            */
-
-            if (choice == "1")
-            {
-                Training();
             }
-            else if (choice == "2")
+            while (!isValid);
+
+            int choiceNumber = int.Parse(choice.KeyChar.ToString());
+            if (choiceNumber == 1)
+            {
+                BattleAgainstTrainer();
+            }
+            else if (choiceNumber == 2)
             {
                 GymLeaderBattle();
             }
@@ -165,10 +165,9 @@ namespace PokemonAdventure
                 printer.Print("Go back to train your Pokemon!");
                 Console.Clear();
                 Console.ReadKey();
-                Training();
+                BattleAgainstTrainer();
             }
         }
-
         private void EndGameScene()
         {
             Console.BackgroundColor = ConsoleColor.White;

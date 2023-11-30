@@ -17,9 +17,6 @@ namespace PokemonAdventure.PokemonTypes
                 new DecreaseDefenceMove("Leer", 10)
                 
             };
-        public GrassType()
-        {
-            TypeName = "Grass";
-        }
+        public GrassType() => TypeName = "Grass";
     }
 }
