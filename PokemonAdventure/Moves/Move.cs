@@ -16,7 +16,7 @@ namespace PokemonAdventure.Moves
     //    while also enabling code-reuse from the base-class.
     internal abstract class Move
     {
-        public abstract string Name { get; init; }
+        public required abstract string Name { get; init; }
         public abstract string Description { get; }
         protected virtual int pauseInMs { get; set; } = 1000;
 

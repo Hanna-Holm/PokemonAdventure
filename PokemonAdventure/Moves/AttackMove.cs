@@ -1,5 +1,6 @@
 ﻿using PokemonAdventure.UserInteraction;
 using PokemonAdventure.PokemonSpecifier;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PokemonAdventure.Moves
 {
@@ -10,13 +11,14 @@ namespace PokemonAdventure.Moves
     // This creates structure in the code allowing for better readability as well as reusability of code. 
     internal class AttackMove : Move
     {
-        public override string Name { get; init; }
+        public required override string Name { get; init; }
         private int damage { get; set; }
         public override string Description => "Physical damage";
 
+        [SetsRequiredMembers]
         public AttackMove(string name, int damage)
         {
-            Name = name;
+            this.Name = name;
             this.damage = damage;
         }
 

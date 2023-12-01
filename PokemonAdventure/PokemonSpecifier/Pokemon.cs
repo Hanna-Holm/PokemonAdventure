@@ -2,6 +2,7 @@
 using PokemonAdventure.PokemonTypes;
 using PokemonAdventure.UserInteraction;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PokemonAdventure.PokemonSpecifier
 {
@@ -13,8 +14,8 @@ namespace PokemonAdventure.PokemonSpecifier
     // Allows for reuseability. 
     internal class Pokemon : ILevelable, IHealable, IDamageable, IPokemonType
     {
-        public string Name { get; set; }
-        public IPokemonType Type { get; init; }
+        public required string Name { get; set; }
+        public required IPokemonType Type { get; init; }
         public string TypeName { get; }
         public int ExperiencePoints { get; set; } = 0;
         private int levelFactor = 10;
@@ -98,6 +99,7 @@ namespace PokemonAdventure.PokemonSpecifier
         // 1. Concept: Dependency injection 
         // 2. How? Creating a pokemon as an IPokemonType.32
         // 3. Why? 
+        [SetsRequiredMembers]
         public Pokemon(string name, IPokemonType type)
         {
             this.Name = name;
@@ -121,6 +123,7 @@ namespace PokemonAdventure.PokemonSpecifier
         //    that called the chained constructor is executed.
         // 3. Why? This enables code reuse, and avoids code duplication, as we can run the code from the chained constructor first
         //    and therefore do not need to write the same code twice.
+        [SetsRequiredMembers]
         public Pokemon(string name, IPokemonType type, int Level) : this(name, type)
         {
             this.Level = Level;

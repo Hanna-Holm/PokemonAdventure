@@ -1,17 +1,19 @@
 ﻿using PokemonAdventure.PokemonSpecifier;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PokemonAdventure.Moves
 {
     internal class DecreaseAttackMove : Move
     {
-        public override string Name { get; init; }
-        private int powerDif { get; init; }
+        public required override string Name { get; init; }
+        private int powerDifference { get; init; }
         public override string Description => "Lowers target attack";
 
-        public DecreaseAttackMove(string name, int amount)
+        [SetsRequiredMembers]
+        public DecreaseAttackMove(string name, int powerDifference)
         {
             Name = name;
-            this.powerDif = amount;
+            this.powerDifference = powerDifference;
         }
 
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
@@ -23,8 +25,8 @@ namespace PokemonAdventure.Moves
                 Thread.Sleep(pauseInMs);
                 return;
             }
-            target.Power -= this.powerDif;
-            printer.Print($"{target.Name}s attack decreased with {this.powerDif} and is now {target.Power}!");
+            target.Power -= this.powerDifference;
+            printer.Print($"{target.Name}s attack decreased with {this.powerDifference} and is now {target.Power}!");
             Thread.Sleep(pauseInMs);
         }
     }
