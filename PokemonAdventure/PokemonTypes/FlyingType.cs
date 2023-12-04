@@ -11,12 +11,11 @@ namespace PokemonAdventure.PokemonTypes
             => new List<Move>
             {
                 new AttackMove("Gust", 80),
-                new AttackMove("Wing attack", 90),
-                new AttackMove("Peck", 100),
                 new DecreaseAccuracyMove("Sand attack", 2),
+                new AttackMove("Wing attack", 90),
                 new DecreaseAttackMove("Growl", 10),
+                new AttackMove("Peck", 100),
                 new DecreaseDefenceMove("Leer", 10)
-                
             };
         public FlyingType()
         {

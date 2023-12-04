@@ -1,21 +1,18 @@
 ﻿using PokemonAdventure.PokemonSpecifier;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PokemonAdventure.Moves
 {
     internal class DecreaseAccuracyMove : Move
     {
-        public override string Name { get; init; }
-        public override string Description { get; } = "Lowers target accuracy";
+        public required override string Name { get; init; }
+        public override string Description => "Lowers target accuracy";
         private readonly int accuracyDecrease;
 
+        [SetsRequiredMembers]
         public DecreaseAccuracyMove(string name, int accuracyDecrease)
         {
-            this.Name = name;
+            Name = name;
             this.accuracyDecrease = accuracyDecrease;
         }
 

@@ -1,15 +1,15 @@
-﻿using PokemonAdventure.UserInteraction;
-using PokemonAdventure.PokemonSpecifier;
+﻿using PokemonAdventure.PokemonSpecifier;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PokemonAdventure.Moves
 {
     internal class DecreaseDefenceMove : Move
     {
-        public override string Name { get; init; }
-        public int DefenceDif { get; init; }
-        public override string Description { get; } = "Lowers target defence";
+        public required override string Name { get; init; }
+        public override string Description => "Lowers target defence";
         private readonly int defenceDecrease;
 
+        [SetsRequiredMembers]
         public DecreaseDefenceMove(string name, int defenceDecrease)
         {
             Name = name;
