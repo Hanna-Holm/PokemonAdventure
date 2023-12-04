@@ -29,6 +29,14 @@ namespace PokemonAdventure.Moves
         public override void GetUsedBy(Pokemon attacker, Pokemon target)
         {
             PrintUsingMessage(attacker);
+
+            bool missedAttack = new Random().Next(1, attacker.Accuracy) == 1;
+            if (missedAttack)
+            {
+                PrintAndPause($"{attacker.Name} missed the attack!");
+                return;
+            }
+
             int totalDamage = (this.damage + attacker.Power - target.Defence) / 5;
             target.TakeDamage(totalDamage);
             PrintAndPause($"{attacker.Name} made {totalDamage} damage to {target.Name}, who now has {target.CurrentHealth} health left.");

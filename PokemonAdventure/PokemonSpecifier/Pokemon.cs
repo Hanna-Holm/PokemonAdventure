@@ -2,6 +2,7 @@
 using PokemonAdventure.PokemonTypes;
 using PokemonAdventure.UserInteraction;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Emit;
 
 namespace PokemonAdventure.PokemonSpecifier
 {
@@ -64,8 +65,7 @@ namespace PokemonAdventure.PokemonSpecifier
           3. Why? This removes the need for a seperate method to caluculate this value. Each access triggers a new calucaltion
              which is needed every time we need to see if a pokemon should level up or not. 
         */
-        public double LevelThreshold => Math.Pow(Level, 2) * 2;
-
+        public double LevelThreshold => (Level - 4) * 50 + 10;
         public bool ShouldLevelUp
             => ExperiencePoints >= LevelThreshold;
         private int currentHealth;
@@ -94,19 +94,20 @@ namespace PokemonAdventure.PokemonSpecifier
                     power = value;
             }
         }
-
+        private int maxAccuracy = 9;
+        public int minAccuracy = 3;
         private int accuracy = 9;
         public int Accuracy
         {
             get => accuracy;
             set
             {
-                if (value < 3)
+                if (value < minAccuracy)
                     accuracy = 3;
                 else
                     accuracy = value;
             }
-        }
+        } 
 
         private int defence = 25;
         public int Defence
@@ -205,15 +206,6 @@ namespace PokemonAdventure.PokemonSpecifier
 
         public void MakeMove(Move move, Pokemon target)
         {
-            bool missedAttack = new Random().Next(1, Accuracy) == 1;
-
-            if (missedAttack)
-            {
-                printer.Print($"{this.Name} missed the attack!");
-                Console.ReadKey();
-                return;
-            }
-
             /*
               1. Concept: Subtype-polymorphism
               2. How? The method GetUsedBy gets invoked on the run-time type of move. A Move can be any subtype 
@@ -242,7 +234,6 @@ namespace PokemonAdventure.PokemonSpecifier
             {
                 while (this.ShouldLevelUp)
                     LevelUp();
-                this.ExperiencePoints = 0;
             }
             else
                 printer.Print($"Current XP count: {this.ExperiencePoints}. You need {LevelThreshold - this.ExperiencePoints} more to level up.");
@@ -255,6 +246,7 @@ namespace PokemonAdventure.PokemonSpecifier
             this.MaxHealth = GetMaxHealthForLevel(this.Level);
             this.Power = GetPowerForLevel(this.Level);
             this.Defence = GetDefenceForLevel(this.Level);
+            this.accuracy = maxAccuracy;
         }
 
         public void LevelUp()

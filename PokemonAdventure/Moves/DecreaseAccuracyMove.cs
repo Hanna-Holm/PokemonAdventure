@@ -20,7 +20,7 @@ namespace PokemonAdventure.Moves
         {
             PrintUsingMessage(attacker);
 
-            if (target.Accuracy == 0)
+            if (target.Accuracy == target.minAccuracy)
             {
                 PrintAndPause("But it failed.");
                 return;
