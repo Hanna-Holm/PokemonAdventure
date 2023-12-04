@@ -8,13 +8,11 @@ namespace PokemonAdventure.PokemonTypes
         public List<Move> TypeSpecificMoves
             => new List<Move>
             {
-                new AttackMove("Scratch", 90),
+                new DecreaseAccuracyMove("Sand attack", 2),
                 new AttackMove("Bite", 110),
-                new DecreaseAccuracyMove("Sand attack", 2),
+                new AttackMove("Scratch", 90),
                 new DecreaseAttackMove("Growl", 10),
-                new DecreaseAccuracyMove("Sand attack", 2),
                 new DecreaseDefenceMove("Leer", 10)
-                
             };
         public NormalType()
         {

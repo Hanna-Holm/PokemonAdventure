@@ -1,5 +1,4 @@
-﻿using PokemonAdventure.Moves;
-using PokemonAdventure.PokemonSpecifier;
+﻿using PokemonAdventure.PokemonSpecifier;
 using PokemonAdventure.PokemonTypes;
 
 namespace PokemonAdventure
