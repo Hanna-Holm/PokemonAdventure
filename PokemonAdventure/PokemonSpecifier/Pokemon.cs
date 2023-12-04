@@ -11,7 +11,7 @@ namespace PokemonAdventure.PokemonSpecifier
     // all these are interfaces that pokemons implement.
     // 3. Pokemons have multiple attributes from all these interfaces making them
     // for example both an ILevelable as well as an IPokemonType.
-    // Allows for reuseability. 
+    // Allows for reuseability. Sybtype polymorphism. 
     internal class Pokemon : ILevelable, IHealable, IDamageable, IPokemonType
     {
         public required string Name { get; set; }
@@ -23,7 +23,7 @@ namespace PokemonAdventure.PokemonSpecifier
 
         // 1. Concept: Computed properties
         // 2. How? The computed property caluclates the LevelThreshold a needed variable to know when the pokemon should level up
-        // this is done by an instance of the vairable Level.
+        // this is done by refering the the property Level on the same Pokemon instance. 
         // 3. Why? This removes the need for a seperate method to calucalte this value. Each access triggers a new calucaltion
         // which is needed every time we need to see if a pokemon should level up or not. 
         public double LevelThreshold => Math.Pow(Level, 2) * 2;
@@ -43,17 +43,8 @@ namespace PokemonAdventure.PokemonSpecifier
         }
         public int MaxHealth { get; set; }
 
-        // 1. Concept: Encapsulation
-        // 2: How? We are hiding the backing field power by using the access modifier private.
-        //    Access to the private power field is only possible inside this class itself.
-        //    We ensure that the power is never set to an invalid state from outside this class
-        //    by having logic in the public Power property, and having the backing field private.
-        // 3. Why? The property Power is part of the public interface that we can interact with from outside this class,
-        //    and we ensure that the power cannot be set to an invalid state from outside this class.
-        //    We cannot set the private power from outside this class, only through the public property
-        //    that contains the logic.
         private int power;
-        public int Power 
+        public int Power
         {
             get => power;
             set
@@ -96,9 +87,13 @@ namespace PokemonAdventure.PokemonSpecifier
         private ConsolePrinter printer = new ConsolePrinter();
         private int pauseInMs = 1000;
 
-        // 1. Concept: Dependency injection 
-        // 2. How? Creating a pokemon as an IPokemonType.32
-        // 3. Why? 
+        // 1. Concept: Dependency injection / Constructor injection 
+        // 2. How? Creating a pokemon as an IPokemonType. The specific type is created outside of this class 
+        // before instantiating the pokemon object, and then injected into the constructor of the pokemon class. 
+        // The specific value IPokemonType Type in this instance of the pokemon is set to the IPokemonType injected into the consturctor. 
+        // 3. Why? This increases maintainability, since we can change the IPokemonType without affecting the implementation of the pokemon class.
+        // It also ensures that we do not have to re-write the code of the pokemon class, instead we can
+        // simply add to the exisiting code. The creation of the IPokemonType is seperated from how it is used in the pokemon class. 
         [SetsRequiredMembers]
         public Pokemon(string name, IPokemonType type)
         {
@@ -142,8 +137,6 @@ namespace PokemonAdventure.PokemonSpecifier
             }
         }
 
-        public void LearnNewMove(Move newMove) => this.Moves.Add(newMove);
-
         public Move ChooseMove()
         {
             bool isValid = false;
@@ -156,9 +149,8 @@ namespace PokemonAdventure.PokemonSpecifier
                 printer.Print("Choose attack:\n");
 
                 for (int i = 0; i < numberOfMovesAvailable; i++)
-                {
                     Console.WriteLine($"{i + 1}. {this.Moves[i].Name} \t - {this.Moves[i].Description}");
-                }
+
                 choice = Console.ReadKey();
                 isValid = validator.CheckIfValidNumber(choice, numberOfMovesAvailable);
             } while (!isValid);
@@ -171,13 +163,13 @@ namespace PokemonAdventure.PokemonSpecifier
         public void MakeMove(Move move, Pokemon target)
         {
             Random random = new Random();
-            bool missedAttack = random.Next(1, Accuracy) == 1; 
+            bool missedAttack = random.Next(1, Accuracy) == 1;
 
             if (missedAttack)
             {
                 printer.Print($"{this.Name} missed the attack!");
                 Console.ReadKey();
-                return; 
+                return;
             }
             // 1. Concept: Subtype-polymorfism
             // 2. How? The method GetUsedBy gets invoked on the run-time type of move.
@@ -209,9 +201,7 @@ namespace PokemonAdventure.PokemonSpecifier
             if (this.ShouldLevelUp)
             {
                 while (this.ShouldLevelUp)
-                {
                     LevelUp();
-                }
                 this.ExperiencePoints = 0;
             }
             else

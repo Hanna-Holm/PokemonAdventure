@@ -10,7 +10,6 @@ namespace PokemonAdventure
     internal class Battle
     {
         private Trainer player { get; init; }
-        private Trainer rival { get; init; }
         public Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
         public Pokemon Winner => playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon; 
@@ -21,7 +20,6 @@ namespace PokemonAdventure
         public Battle(Trainer player, Trainer rival)
         {
             this.player = player;
-            this.rival = rival;
             this.playerPokemon = player.capturedPokemon[0];
             this.rivalPokemon = rival.capturedPokemon[0];
         }
@@ -70,6 +68,12 @@ namespace PokemonAdventure
             rivalPokemon.RestoreHealth();
         }
 
+        // 1. Concept: Encapsulation
+        // 2: How? We are hiding the backing field power by using the access modifier private.
+        //    Access to the private GenerateRivalMove methods is only possible inside this class itself.
+        //    We ensure that the method is never set to an invalid state from outside this class.
+        // 3. Why? The access modifier private helps with encapsualtion to ensure that the method
+        // is not accessable outside of class. 
         private Move GenerateRivalMove()
         {
             Random random = new Random();

@@ -23,6 +23,7 @@ namespace PokemonAdventure
 
             startingPokemon = PokemonGenerator.GeneratePokemon(world);
             InitializePlayer(startingPokemon);
+            ChoocePathAfterBattle();
             ExplainGame();
             Console.Clear();
             BattleAgainstTrainer();
@@ -79,7 +80,7 @@ namespace PokemonAdventure
             battle.Fight();
             Console.Clear();
 
-            PathAfterBattle();
+            ChoocePathAfterBattle();
             Console.Clear();
         }
 
@@ -90,7 +91,7 @@ namespace PokemonAdventure
             return new Trainer(rivalPokemon);
         }
 
-        public void PathAfterBattle()
+        public void ChoocePathAfterBattle()
         {
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
@@ -101,7 +102,6 @@ namespace PokemonAdventure
             bool isValid = false;
             int numberOfMovesAvailable = 2;
             ConsoleKeyInfo choice;
-            string input = "";
             
             do
             {
@@ -114,15 +114,11 @@ namespace PokemonAdventure
             }
             while (!isValid);
 
-            int choiceNumber = int.Parse(choice.KeyChar.ToString());
-            if (choiceNumber == 1)
-            {
+            string choiceNumber = choice.KeyChar.ToString();
+            if (choiceNumber == "1") 
                 BattleAgainstTrainer();
-            }
-            else if (choiceNumber == 2)
-            {
+            else if (choiceNumber == "2") 
                 GymLeaderBattle();
-            }
         }
         private Trainer GenerateGymLeader()
         {
@@ -155,16 +151,15 @@ namespace PokemonAdventure
             battle.Fight();
             Console.Clear();
 
-            if (battle.playerPokemon == battle.Winner) // Does the same if-statement 2 times maybe we could remove it 
-            {
+            bool wonGymLeaderBattle = battle.playerPokemon == battle.Winner;
+            if (wonGymLeaderBattle) 
                 EndGameScene();
-            }
             else
             {
                 printer.Print("You are not yet strong enough to beat the gym leader.");
                 printer.Print("Go back to train your Pokemon!");
-                Console.Clear();
                 Console.ReadKey();
+                Console.Clear();
                 BattleAgainstTrainer();
             }
         }
@@ -217,7 +212,6 @@ namespace PokemonAdventure
             ");
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("\t Press any key to close this window. . .");
-            Console.ReadKey();
         }
     }
 }

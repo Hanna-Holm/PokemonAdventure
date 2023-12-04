@@ -7,7 +7,6 @@
     // 3. Why? It hekps us write code that can operate on a wide range of objects.
     // Meaning that we can re-use instances from and ILevelable for each different type of
     // ILevelable there is. It contains signatures for methods as well as properties.
-    // 
     internal interface ILevelable
     {
         public int ExperiencePoints { get; set; }

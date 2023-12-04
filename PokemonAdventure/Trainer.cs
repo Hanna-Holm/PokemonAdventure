@@ -17,10 +17,7 @@ namespace PokemonAdventure
         // There can even be different types of pokemons. This allows us to change the behaviour of objects at run-time.
         // An example of this is that pokemons has an attack. And these attacks
         // are set and can be changed at run-time.
-        public Trainer(Pokemon pokemon)
-        {
-            this.capturedPokemon.Add(pokemon);
-        }
+        public Trainer(Pokemon pokemon) => this.capturedPokemon.Add(pokemon);
 
         public void SetName()
         {

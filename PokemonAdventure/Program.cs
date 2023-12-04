@@ -24,10 +24,8 @@ namespace PokemonAdventure
             printer.Print("\t    Press [Enter] to start your Adventure.");
 
             string input = "";
-            do
-            {
-                input = Console.ReadLine();
-            } while (input != "");
+            do input = Console.ReadLine();
+            while (input != "");
 
             Story story = new Story();
             story.Begin();

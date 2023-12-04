@@ -18,10 +18,8 @@ namespace PokemonAdventure.UserInteraction
             ConsoleKeyInfo input = Console.ReadKey();
 
             if (input.Key == ConsoleKey.D1 || input.Key == ConsoleKey.NumPad1)
-            {
                 return true;
-            }
-
+            
             printer.Print($"Let's enter your name again.");
             return false;
         }
@@ -33,9 +31,7 @@ namespace PokemonAdventure.UserInteraction
                 int.TryParse(input.KeyChar.ToString(), out int number);
 
                 if (number > 0 && number < numberOfChoices + 1)
-                {
                     return true;
-                }
             }
 
             Console.Clear();
