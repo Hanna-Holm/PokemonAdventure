@@ -2,7 +2,6 @@
 using PokemonAdventure.PokemonTypes;
 using PokemonAdventure.UserInteraction;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection.Emit;
 
 namespace PokemonAdventure.PokemonSpecifier
 {
@@ -66,8 +65,7 @@ namespace PokemonAdventure.PokemonSpecifier
              which is needed every time we need to see if a pokemon should level up or not. 
         */
         public double LevelThreshold => (Level - 4) * 50 + 10;
-        public bool ShouldLevelUp
-            => ExperiencePoints >= LevelThreshold;
+        public bool ShouldLevelUp => ExperiencePoints >= LevelThreshold;
         private int currentHealth;
         public int CurrentHealth
         {
@@ -267,21 +265,16 @@ namespace PokemonAdventure.PokemonSpecifier
             Console.WriteLine($"Defence: {this.Defence} (+{Defence - GetDefenceForLevel(this.Level - 1)})");
         }
 
-        public void PrintStats() => Console.WriteLine($"Level {Level} {Name}\t HP: {CurrentHealth}/{MaxHealth} | Defence: {this.Defence} | Attack: {this.Power}");
+        public void PrintStats() 
+            => Console.WriteLine($"Level {Level} {Name}\t HP: {CurrentHealth}/{MaxHealth} | Defence: {this.Defence} | Attack: {this.Power}");
 
         public void RestoreHealth() => CurrentHealth = MaxHealth;
 
-        public int GetMaxHealthForLevel(int level)
-            => level * 20;
+        public int GetMaxHealthForLevel(int level) => level * 20;
 
-        public int GetPowerForLevel(int level)
-            => level * 6;
-        public int GetDefenceForLevel(int level)
-            => level * 5;
+        public int GetPowerForLevel(int level) => level * 6;
+        public int GetDefenceForLevel(int level) => level * 5;
 
-        public Pokemon Clone()
-        {
-            return new Pokemon(this.Name, this.Type);
-        }
+        public Pokemon Clone() => new Pokemon(this.Name, this.Type);
     }
 }

@@ -18,9 +18,6 @@ namespace PokemonAdventure.PokemonTypes
                 new DecreaseAttackMove("Growl", 10)
             };
 
-        public ElectricType()
-        {
-            TypeName = "Electric";
-        }
+        public ElectricType() => TypeName = "Electric";
     }
 }

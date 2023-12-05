@@ -17,9 +17,6 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Peck", 100),
                 new DecreaseDefenceMove("Leer", 10)
             };
-        public FlyingType()
-        {
-            TypeName = "Flying";
-        }
+        public FlyingType() => TypeName = "Flying";
     }
 }

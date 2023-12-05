@@ -9,10 +9,8 @@ namespace PokemonAdventure
         private Trainer player { get; init; }
         public Pokemon playerPokemon { get; set; }
         private Pokemon rivalPokemon { get; set; }
-        public Pokemon Winner
-        {
-            get => playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon;
-        }
+        public Pokemon Winner 
+            => playerPokemon.CurrentHealth <= 0 ? rivalPokemon : playerPokemon;
         private bool isOver
             => playerPokemon.CurrentHealth <= 0 || rivalPokemon.CurrentHealth <= 0;
 

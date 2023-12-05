@@ -16,9 +16,6 @@ namespace PokemonAdventure.PokemonTypes
                 new AttackMove("Vine whip", 100),
                 new DecreaseDefenceMove("Leer", 10)
             };
-        public GrassType()
-        {
-            TypeName = "Grass";
-        }
+        public GrassType() => TypeName = "Grass";
     }
 }

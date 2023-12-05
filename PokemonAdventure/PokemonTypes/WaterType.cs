@@ -16,9 +16,6 @@ namespace PokemonAdventure.PokemonTypes
                 new DecreaseDefenceMove("Leer", 10),
                 new AttackMove("Bubble", 90),
             };
-        public WaterType()
-        {
-            TypeName = "Water";
-        }
+        public WaterType() => TypeName = "Water";
     }
 }

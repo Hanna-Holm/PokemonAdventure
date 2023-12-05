@@ -11,11 +11,7 @@ namespace PokemonAdventure
         Validator validator = new Validator();
         public List<Pokemon> CapturedPokemon { get; private set; }
 
-
-        public Trainer(Pokemon pokemon)
-        {
-            this.capturedPokemon.Add(pokemon);
-        }
+        public Trainer(Pokemon pokemon) => this.capturedPokemon.Add(pokemon);
 
         public void SetName()
         {
