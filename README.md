@@ -1,13 +1,6 @@
 ## Pokemon Console Game in C#
 This project is a console application implementing a Pokemon game in C# with a strong focus on Object-Oriented Programming (OOP) concepts. The game leverages subtype polymorphism through inheritance and interfaces, as well as method and constructor overloading. It was developed collaboratively by a team of two students.
 
-### Table of Contents
-[About the Project]
-[Object-Oriented Concepts]
-[Getting Started]
-[Game Features]
-[Contributors]
-
 ### About the Project
 #### Game Description
 The Pokemon Console Game is a single-player text-based adventure where you can train different Pokemon by battling against other trainers, and ultimately against the gym leader to win the game. The project focuses on applying Object-Oriented Programming principles, with a focus on subtype polymorphism, to create a modular and extensible codebase.
