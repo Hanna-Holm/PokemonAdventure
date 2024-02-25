@@ -7,12 +7,15 @@ The Pokemon Console Game is a single-player text-based adventure where you can t
 
 #### Screenshots
 ![image](https://github.com/Hanna-Holm/PokemonAdventure/assets/18073317/331aafb6-2ec3-40d2-b98d-ef4e9d4c65c1)
+
 Starting screen.
 
 ![image](https://github.com/Hanna-Holm/PokemonAdventure/assets/18073317/28b1ce8f-a0e6-40cf-b87d-6f94cd0b3442)
+
 Introduction. 
 
 ![image](https://github.com/Hanna-Holm/PokemonAdventure/assets/18073317/f68a0ac1-118d-4a7d-8cea-a4b569a12aa6)
+
 Battle scene.
 
 #### How to play
